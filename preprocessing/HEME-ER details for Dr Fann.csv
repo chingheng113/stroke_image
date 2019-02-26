@@ -1,0 +1,278 @@
+﻿Study,MRI HEME #,CT HEME #,Diagnosis Classification
+HEMEER,136,95,Hemorrhage(Primary Hematoma)
+HEMEER,146,346,Hemorrhage(Primary Hematoma)
+HEMEER,160,386,Hemorrhage(Primary Hematoma)
+HEMEER,201,232,Hemorrhage(Primary Hematoma)
+HEMEER,212,127,Hemorrhage(Primary Hematoma)
+HEMEER,222,201,Hemorrhage(Primary Hematoma)
+HEMEER,258,397,Hemorrhage(Primary Hematoma)
+HEMEER,297,227,Hemorrhage(Primary Hematoma)
+HEMEER,345,415,Hemorrhage(Primary Hematoma)
+HEMEER,363,355,Hemorrhage(Primary Hematoma)
+HEMEER,445,344,Hemorrhage(Primary Hematoma)
+HEMEER,456,154,Hemorrhage(Primary Hematoma)
+HEMEER,475,110,Hemorrhage(SDH)
+HEMEER,401,387,"Hemorrhage(SDH), Other Diagnosis"
+HEMEER,101,162,Ischemic Stroke
+HEMEER,103,35,Ischemic Stroke
+HEMEER,104,6,Ischemic Stroke
+HEMEER,109,206,Ischemic Stroke
+HEMEER,112,250,Ischemic Stroke
+HEMEER,115,144,Ischemic Stroke
+HEMEER,116,369,Ischemic Stroke
+HEMEER,117,332,Ischemic Stroke
+HEMEER,118,223,Ischemic Stroke
+HEMEER,121,64,Ischemic Stroke
+HEMEER,123,181,Ischemic Stroke
+HEMEER,124,14,Ischemic Stroke
+HEMEER,125,382,Ischemic Stroke
+HEMEER,127,128,Ischemic Stroke
+HEMEER,133,171,Ischemic Stroke
+HEMEER,140,101,Ischemic Stroke
+HEMEER,143,422,Ischemic Stroke
+HEMEER,144,152,Ischemic Stroke
+HEMEER,145,106,Ischemic Stroke
+HEMEER,149,327,Ischemic Stroke
+HEMEER,151,408,Ischemic Stroke
+HEMEER,153,258,Ischemic Stroke
+HEMEER,164,175,Ischemic Stroke
+HEMEER,168,330,Ischemic Stroke
+HEMEER,171,156,Ischemic Stroke
+HEMEER,173,212,Ischemic Stroke
+HEMEER,176,414,Ischemic Stroke
+HEMEER,177,246,Ischemic Stroke
+HEMEER,179,368,Ischemic Stroke
+HEMEER,184,219,Ischemic Stroke
+HEMEER,185,140,Ischemic Stroke
+HEMEER,188,343,Ischemic Stroke
+HEMEER,190,150,Ischemic Stroke
+HEMEER,193,153,Ischemic Stroke
+HEMEER,195,350,Ischemic Stroke
+HEMEER,196,44,Ischemic Stroke
+HEMEER,197,337,Ischemic Stroke
+HEMEER,198,97,Ischemic Stroke
+HEMEER,207,260,Ischemic Stroke
+HEMEER,224,425,Ischemic Stroke
+HEMEER,229,420,Ischemic Stroke
+HEMEER,230,159,Ischemic Stroke
+HEMEER,231,60,Ischemic Stroke
+HEMEER,233,115,Ischemic Stroke
+HEMEER,234,21,Ischemic Stroke
+HEMEER,244,107,Ischemic Stroke
+HEMEER,245,208,Ischemic Stroke
+HEMEER,246,142,Ischemic Stroke
+HEMEER,249,30,Ischemic Stroke
+HEMEER,250,401,Ischemic Stroke
+HEMEER,259,334,Ischemic Stroke
+HEMEER,265,19,Ischemic Stroke
+HEMEER,270,123,Ischemic Stroke
+HEMEER,271,17,Ischemic Stroke
+HEMEER,272,22,Ischemic Stroke
+HEMEER,277,196,Ischemic Stroke
+HEMEER,279,377,Ischemic Stroke
+HEMEER,282,178,Ischemic Stroke
+HEMEER,286,76,Ischemic Stroke
+HEMEER,287,317,Ischemic Stroke
+HEMEER,292,186,Ischemic Stroke
+HEMEER,294,342,Ischemic Stroke
+HEMEER,296,353,Ischemic Stroke
+HEMEER,299,67,Ischemic Stroke
+HEMEER,303,248,Ischemic Stroke
+HEMEER,305,358,Ischemic Stroke
+HEMEER,309,323,Ischemic Stroke
+HEMEER,312,78,Ischemic Stroke
+HEMEER,316,393,Ischemic Stroke
+HEMEER,319,155,Ischemic Stroke
+HEMEER,323,315,Ischemic Stroke
+HEMEER,324,28,Ischemic Stroke
+HEMEER,331,424,Ischemic Stroke
+HEMEER,336,134,Ischemic Stroke
+HEMEER,339,395,Ischemic Stroke
+HEMEER,341,158,Ischemic Stroke
+HEMEER,342,222,Ischemic Stroke
+HEMEER,343,168,Ischemic Stroke
+HEMEER,346,120,Ischemic Stroke
+HEMEER,360,237,Ischemic Stroke
+HEMEER,364,239,Ischemic Stroke
+HEMEER,368,1,Ischemic Stroke
+HEMEER,373,365,Ischemic Stroke
+HEMEER,387,333,Ischemic Stroke
+HEMEER,393,214,Ischemic Stroke
+HEMEER,396,211,Ischemic Stroke
+HEMEER,400,220,Ischemic Stroke
+HEMEER,404,405,Ischemic Stroke
+HEMEER,407,247,Ischemic Stroke
+HEMEER,411,218,Ischemic Stroke
+HEMEER,412,312,Ischemic Stroke
+HEMEER,415,146,Ischemic Stroke
+HEMEER,424,372,Ischemic Stroke
+HEMEER,425,336,Ischemic Stroke
+HEMEER,426,419,Ischemic Stroke
+HEMEER,429,357,Ischemic Stroke
+HEMEER,432,157,Ischemic Stroke
+HEMEER,434,314,Ischemic Stroke
+HEMEER,443,306,Ischemic Stroke
+HEMEER,444,234,Ischemic Stroke
+HEMEER,446,40,Ischemic Stroke
+HEMEER,448,111,Ischemic Stroke
+HEMEER,450,215,Ischemic Stroke
+HEMEER,464,42,Ischemic Stroke
+HEMEER,465,132,Ischemic Stroke
+HEMEER,469,197,Ischemic Stroke
+HEMEER,470,228,Ischemic Stroke
+HEMEER,476,91,Ischemic Stroke
+HEMEER,483,36,Ischemic Stroke
+HEMEER,487,174,Ischemic Stroke
+HEMEER,497,8,Ischemic Stroke
+HEMEER,111,160,Other Diagnosis
+HEMEER,120,304,Other Diagnosis
+HEMEER,130,4,Other Diagnosis
+HEMEER,135,321,Other Diagnosis
+HEMEER,142,87,Other Diagnosis
+HEMEER,147,15,Other Diagnosis
+HEMEER,152,195,Other Diagnosis
+HEMEER,155,38,Other Diagnosis
+HEMEER,156,338,Other Diagnosis
+HEMEER,157,31,Other Diagnosis
+HEMEER,161,339,Other Diagnosis
+HEMEER,162,326,Other Diagnosis
+HEMEER,166,204,Other Diagnosis
+HEMEER,169,308,Other Diagnosis
+HEMEER,170,240,Other Diagnosis
+HEMEER,174,242,Other Diagnosis
+HEMEER,175,136,Other Diagnosis
+HEMEER,181,26,Other Diagnosis
+HEMEER,182,41,Other Diagnosis
+HEMEER,186,43,Other Diagnosis
+HEMEER,208,329,Other Diagnosis
+HEMEER,210,109,Other Diagnosis
+HEMEER,214,409,Other Diagnosis
+HEMEER,217,418,Other Diagnosis
+HEMEER,223,147,Other Diagnosis
+HEMEER,225,24,Other Diagnosis
+HEMEER,240,189,Other Diagnosis
+HEMEER,242,191,Other Diagnosis
+HEMEER,243,180,Other Diagnosis
+HEMEER,251,426,Other Diagnosis
+HEMEER,252,33,Other Diagnosis
+HEMEER,255,241,Other Diagnosis
+HEMEER,257,12,Other Diagnosis
+HEMEER,260,20,Other Diagnosis
+HEMEER,262,362,Other Diagnosis
+HEMEER,263,244,Other Diagnosis
+HEMEER,264,163,Other Diagnosis
+HEMEER,267,94,Other Diagnosis
+HEMEER,268,39,Other Diagnosis
+HEMEER,281,322,Other Diagnosis
+HEMEER,284,245,Other Diagnosis
+HEMEER,288,59,Other Diagnosis
+HEMEER,291,359,Other Diagnosis
+HEMEER,295,410,Other Diagnosis
+HEMEER,302,423,Other Diagnosis
+HEMEER,304,335,Other Diagnosis
+HEMEER,311,207,Other Diagnosis
+HEMEER,313,235,Other Diagnosis
+HEMEER,315,349,Other Diagnosis
+HEMEER,317,104,Other Diagnosis
+HEMEER,321,371,Other Diagnosis
+HEMEER,322,193,Other Diagnosis
+HEMEER,325,122,Other Diagnosis
+HEMEER,334,74,Other Diagnosis
+HEMEER,338,57,Other Diagnosis
+HEMEER,344,230,Other Diagnosis
+HEMEER,354,48,Other Diagnosis
+HEMEER,356,55,Other Diagnosis
+HEMEER,357,257,Other Diagnosis
+HEMEER,370,184,Other Diagnosis
+HEMEER,376,7,Other Diagnosis
+HEMEER,377,130,Other Diagnosis
+HEMEER,378,217,Other Diagnosis
+HEMEER,381,307,Other Diagnosis
+HEMEER,388,363,Other Diagnosis
+HEMEER,390,11,Other Diagnosis
+HEMEER,391,179,Other Diagnosis
+HEMEER,392,320,Other Diagnosis
+HEMEER,395,54,Other Diagnosis
+HEMEER,399,50,Other Diagnosis
+HEMEER,402,73,Other Diagnosis
+HEMEER,405,121,Other Diagnosis
+HEMEER,406,256,Other Diagnosis
+HEMEER,417,370,Other Diagnosis
+HEMEER,418,25,Other Diagnosis
+HEMEER,423,53,Other Diagnosis
+HEMEER,427,139,Other Diagnosis
+HEMEER,428,361,Other Diagnosis
+HEMEER,433,52,Other Diagnosis
+HEMEER,435,388,Other Diagnosis
+HEMEER,439,356,Other Diagnosis
+HEMEER,447,10,Other Diagnosis
+HEMEER,453,188,Other Diagnosis
+HEMEER,463,243,Other Diagnosis
+HEMEER,468,398,Other Diagnosis
+HEMEER,471,192,Other Diagnosis
+HEMEER,491,137,Other Diagnosis
+HEMEER,493,161,Other Diagnosis
+HEMEER,494,328,Other Diagnosis
+HEMEER,105,261,TIA
+HEMEER,106,37,TIA
+HEMEER,114,379,TIA
+HEMEER,119,96,TIA
+HEMEER,148,263,TIA
+HEMEER,150,238,TIA
+HEMEER,167,225,TIA
+HEMEER,178,205,TIA
+HEMEER,183,89,TIA
+HEMEER,187,364,TIA
+HEMEER,189,29,TIA
+HEMEER,202,47,TIA
+HEMEER,226,383,TIA
+HEMEER,241,316,TIA
+HEMEER,248,187,TIA
+HEMEER,269,13,TIA
+HEMEER,276,99,TIA
+HEMEER,280,213,TIA
+HEMEER,329,119,TIA
+HEMEER,335,46,TIA
+HEMEER,358,229,TIA
+HEMEER,359,251,TIA
+HEMEER,375,23,TIA
+HEMEER,386,118,TIA
+HEMEER,410,381,TIA
+HEMEER,436,65,TIA
+HEMEER,442,141,TIA
+HEMEER,452,399,TIA
+HEMEER,455,88,TIA
+HEMEER,458,98,TIA
+HEMEER,473,352,TIA
+HEMEER,479,331,TIA
+HEMEER,485,145,TIA
+HEMEER,486,5,TIA
+HEMEER,492,324,TIA
+HEMEER,496,18,TIA
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
