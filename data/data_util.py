@@ -1,14 +1,16 @@
+import SimpleITK as sitk
 import pandas as pd
 import glob
 import os
+import numpy as np
 
 
-def get_ids_labels(mca):
+def get_ids_labels(mc):
     df = pd.read_csv('HEME-ER details for Dr Fann.csv').dropna()
     # id
-    if mca == 'mri':
+    if mc == 'mri':
         ids = df[['MRI HEME #']].astype(int)
-    elif mca == 'ct':
+    elif mc == 'ct':
         ids = df[['CT HEME #']].astype(int)
     else:
         ids = df[['MRI HEME #', 'CT HEME #']].astype(int)
@@ -40,6 +42,15 @@ def get_img_paths(mc):
     return img_paths
 
 
+def get_all_imgs(mc):
+    read_pathes = get_img_paths(mc)
+    a = []
+    for read_path in read_pathes:
+        sitk_t1 = sitk.ReadImage(read_path)
+        t1 = sitk.GetArrayFromImage(sitk_t1).T.reshape(-1, 1, 64, 64, 64)
+        a = np.stack(t1, axis=0)
+    print(a)
+
 if __name__ =='__main__':
-    a = get_img_paths('ct')
+    get_all_imgs('ct')
     print('done')
