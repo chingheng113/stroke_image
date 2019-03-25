@@ -3,7 +3,8 @@ import numpy as np
 from keras.layers import Dense, Conv3D, MaxPooling3D, Flatten, Input, Activation, BatchNormalization, Dropout
 from keras import backend
 import keras
-import glob, os
+import sys
+sys.path.append("..")
 from data import data_util
 
 backend.set_image_data_format('channels_first')
