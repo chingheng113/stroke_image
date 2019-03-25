@@ -9,20 +9,19 @@ from data import data_util
 backend.set_image_data_format('channels_first')
 config = dict()
 config['which_machine'] = 'ct'
-config['image_shape'] = (64, 64, 64)
+config['image_shape'] = (128, 128, 28) # CHANNEL, WIDTH, HEIGHT, DEPTH
 if config['which_machine'] == 'ct':
     config['all_modalities'] = ['ct']
 else:
     config["all_modalities"] = ['t1', 't1ce', 'flair', 't2']
 config['n_channels'] = len(config["all_modalities"])
-config['input_shape'] = tuple([config['n_channels']] + list(config['image_shape'])) # CHANNEL, WIDTH, HEIGHT, DEPTH
+config['input_shape'] = tuple([config['n_channels']] + list(config['image_shape']))
 
 if __name__ == '__main__':
     read_file_path = data_util.write_data_to_file(config)
-    X_data = data_util.open_data_file(read_file_path).root.data[0:8]
-
-
-    y_data_o = data_util.open_data_file(read_file_path).root.label[0:8]
+    # see get_data_from_file for generator....
+    X_data = data_util.open_data_file(read_file_path).root.data[0:20]
+    y_data_o = data_util.open_data_file(read_file_path).root.label[0:20]
     n_classes = np.unique(y_data_o).shape[0]
     y_data = keras.utils.to_categorical(y_data_o, num_classes=n_classes)
 
