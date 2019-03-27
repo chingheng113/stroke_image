@@ -1,11 +1,11 @@
 import sys, os
 sys.path.append(os.path.abspath(os.path.join('/data/linc9/stroke_image/')))
-from keras.engine import Input, Model
+from data import data_util
+from keras.engine import Model
 import numpy as np
 from keras.layers import Dense, Conv3D, MaxPooling3D, Flatten, Input, Activation, BatchNormalization, Dropout
 from keras import backend
-import keras
-from data import data_util
+import keras.optimizers
 
 backend.set_image_data_format('channels_first')
 config = dict()
@@ -47,8 +47,10 @@ if __name__ == '__main__':
     den_2 = Dense(units=50, activation='sigmoid')(drop_1)
     output = Dense(units=n_classes, activation='softmax')(den_2)
     model = Model(inputs=input_lay, outputs=output)
-    model.compile(loss='binary_crossentropy', optimizer='adadelta ', metrics=['accuracy'])
-    print(model.summary())
+
+    opt = keras.optimizers.Adadelta()
+    model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
+    # print(metricsodel.summary())
     history = model.fit(x=X_data,
                         y=y_data,
                         validation_split=0.3,
