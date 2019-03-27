@@ -21,8 +21,8 @@ config['input_shape'] = tuple([config['n_channels']] + list(config['image_shape'
 if __name__ == '__main__':
     read_file_path = data_util.write_data_to_file(config)
     # see get_data_from_file for generator....
-    X_data = data_util.open_data_file(read_file_path).root.data[0:2]
-    y_data_o = data_util.open_data_file(read_file_path).root.label[0:2]
+    X_data = data_util.open_data_file(read_file_path).root.data[0:20]
+    y_data_o = data_util.open_data_file(read_file_path).root.label[0:20]
     n_classes = np.unique(y_data_o).shape[0]
     y_data = keras.utils.to_categorical(y_data_o, num_classes=n_classes)
 
