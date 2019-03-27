@@ -47,7 +47,7 @@ if __name__ == '__main__':
     den_2 = Dense(units=50, activation='sigmoid')(drop_1)
     output = Dense(units=n_classes, activation='softmax')(den_2)
     model = Model(inputs=input_lay, outputs=output)
-    model.compile(loss='binary_crossentropy', optimizer='sgd', metrics=['accuracy'])
+    model.compile(loss='binary_crossentropy', optimizer='adadelta ', metrics=['accuracy'])
     print(model.summary())
     history = model.fit(x=X_data,
                         y=y_data,
