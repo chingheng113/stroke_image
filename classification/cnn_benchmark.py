@@ -29,13 +29,16 @@ if __name__ == '__main__':
     input_lay = Input(shape=config['input_shape'])
     conv_1 = Conv3D(filters=5, kernel_size=(3, 3, 3), strides=(1, 1, 1))(input_lay)
     # nor_1 = BatchNormalization(axis=1)(conv_1)
-    maxp_1 = MaxPooling3D(pool_size=(2, 2, 2))(conv_1)
+    act_1 = Activation('relu')(conv_1)
+    maxp_1 = MaxPooling3D(pool_size=(2, 2, 2))(act_1)
 
     conv_2 = Conv3D(filters=8, kernel_size=(3, 3, 3), strides=(1, 1, 1))(maxp_1)
-    maxp_2 = MaxPooling3D(pool_size=(2, 2, 2))(conv_2)
+    act_2 = Activation('relu')(conv_2)
+    maxp_2 = MaxPooling3D(pool_size=(2, 2, 2))(act_2)
 
     conv_3 = Conv3D(filters=11, kernel_size=(3, 3, 3), strides=(1, 1, 1))(maxp_2)
-    maxp_3 = MaxPooling3D(pool_size=(2, 2, 2))(conv_3)
+    act_3 = Activation('relu')(conv_3)
+    maxp_3 = MaxPooling3D(pool_size=(2, 2, 2))(act_3)
 
 
     flat_1 = Flatten()(maxp_3)
@@ -44,7 +47,7 @@ if __name__ == '__main__':
     den_2 = Dense(units=50, activation='relu')(drop_1)
     output = Dense(units=n_classes, activation='softmax')(den_2)
     model = Model(inputs=input_lay, outputs=output)
-    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     # print(model.summary())
     history = model.fit(x=X_data,
                         y=y_data,
