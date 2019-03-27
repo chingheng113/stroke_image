@@ -48,9 +48,10 @@ if __name__ == '__main__':
     output = Dense(units=n_classes, activation='softmax')(den_2)
     model = Model(inputs=input_lay, outputs=output)
     model.compile(loss='binary_crossentropy', optimizer='sgd', metrics=['accuracy'])
-    # print(model.summary())
+    print(model.summary())
     history = model.fit(x=X_data,
                         y=y_data,
+                        validation_split=0.3,
                         batch_size=3,
                         epochs=300,
                         verbose=1
