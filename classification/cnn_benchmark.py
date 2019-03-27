@@ -1,10 +1,11 @@
+import sys, os
+sys.path.append(os.path.abspath(os.path.join('/data/linc9/stroke_image/')))
 from keras.engine import Input, Model
 import numpy as np
 from keras.layers import Dense, Conv3D, MaxPooling3D, Flatten, Input, Activation, BatchNormalization, Dropout
-from keras import backend
+#from keras import backend
+from tensorflow.keras import backend
 import keras
-import sys
-sys.path.append("..")
 from data import data_util
 
 backend.set_image_data_format('channels_first')
