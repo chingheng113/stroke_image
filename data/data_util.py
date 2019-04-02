@@ -55,6 +55,7 @@ def get_subject_label(s_id, ids_labels):
     label = id_label.iloc[:,1].values
     return label
 
+
 def create_data_file(config, n_samples, file_path):
     hdf5_file = tables.open_file(file_path, mode='w')
     filters = tables.Filters(complevel=5, complib='blosc')
@@ -71,7 +72,7 @@ def create_data_file(config, n_samples, file_path):
     return hdf5_file, data_storage, label_storage
 
 
-def write_ct_image_data_to_file(config, img_paths, data_storage, label_storage):
+def write_ct_image_label_to_file(config, img_paths, data_storage, label_storage):
     ct_img_list = []
     ids_labels = get_ids_labels(config['which_machine'])
     for img_path in img_paths:
@@ -90,8 +91,7 @@ def write_data_to_file(config):
     n_samples = len(img_paths)
     hdf5_file, data_storage, label_storage = create_data_file(config, n_samples, file_path)
     if config['which_machine'] == 'ct':
-        write_ct_image_data_to_file(config, img_paths, data_storage, label_storage)
-        # write_ct_labels_to_file(config, img_paths)
+        write_ct_image_label_to_file(config, img_paths, data_storage, label_storage)
     else:
         # MRI...to be continue...
         pass
