@@ -12,7 +12,6 @@ def pickle_dump(item, out_file):
 
 
 def split_list(input_list, validation_size=0.3, shuffle_list=True):
-    print('in split_list')
     split = 1. - validation_size
     if shuffle_list:
         shuffle(input_list)
@@ -33,27 +32,20 @@ def get_validation_split(data_file, validation_size):
 
 
 def add_data(x_list, y_list, data_file, index, config):
-    print('in add_data')
-    print('before data_file')
     X_data = data_file.root.data[index]
-    print('after data_file')
     y_data_o = data_file.root.label[index]
-    print('before keras')
     y_data = keras.utils.to_categorical(y_data_o, num_classes=config['n_classes'])
-    print('after keras')
     x_list.append(X_data)
     y_list.append(y_data)
 
 
 def convert_data(x_list, y_list):
-    print('in covert_data')
     x = np.asarray(x_list)
     y = np.asarray(y_list)
     return x, y
 
 
 def data_generator(data_file, index_list, config):
-    print('in data_generator')
     while True:
         x_list = list()
         y_list = list()
@@ -61,7 +53,6 @@ def data_generator(data_file, index_list, config):
         while len(index_list) > 0:
             index = index_list.pop()
             add_data(x_list, y_list, data_file, index, config)
-            print('before yield')
             yield convert_data(x_list, y_list)
             x_list = list()
             y_list = list()

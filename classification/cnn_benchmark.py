@@ -63,6 +63,7 @@ if __name__ == '__main__':
                                   workers=0,
                                   verbose=1
                                   )
+    print('Training done...')
 
     X_data = data_util.open_data_file(read_file_path).root.data[0:20]
     # y_data_o = data_util.open_data_file(read_file_path).root.label[0:20]
