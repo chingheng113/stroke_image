@@ -36,6 +36,7 @@ def add_data(x_list, y_list, data_file, index, config):
     print('in add_data')
     print('before data_file')
     X_data = data_file.root.data[index]
+    print('after data_file')
     y_data_o = data_file.root.label[index]
     print('before keras')
     y_data = keras.utils.to_categorical(y_data_o, num_classes=config['n_classes'])
@@ -60,6 +61,7 @@ def data_generator(data_file, index_list, config):
         while len(index_list) > 0:
             index = index_list.pop()
             add_data(x_list, y_list, data_file, index, config)
+            print('before yield')
             yield convert_data(x_list, y_list)
             x_list = list()
             y_list = list()
