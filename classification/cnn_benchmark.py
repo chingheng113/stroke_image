@@ -58,7 +58,8 @@ if __name__ == '__main__':
     history = model.fit_generator(generator=train_generator,
                                   steps_per_epoch=n_train_steps,
                                   epochs=config['batch_size'],
-
+                                  validation_data=validation_generator,
+                                  validation_steps=n_validation_steps,
                                   verbose=1
                                   )
     print('Training done...')

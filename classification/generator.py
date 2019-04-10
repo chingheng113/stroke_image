@@ -37,6 +37,7 @@ def add_data(x_list, y_list, data_file, index, config):
     y_data = keras.utils.to_categorical(y_data_o, num_classes=config['n_classes'])
     x_list.append(X_data)
     y_list.append(y_data)
+    return x_list, y_list
 
 
 def convert_data(x_list, y_list):
@@ -52,7 +53,7 @@ def data_generator(data_file, index_list, config):
         shuffle(index_list)
         while len(index_list) > 0:
             index = index_list.pop()
-            add_data(x_list, y_list, data_file, index, config)
+            x_list, y_list = add_data(x_list, y_list, data_file, index, config)
             yield convert_data(x_list, y_list)
             x_list = list()
             y_list = list()
