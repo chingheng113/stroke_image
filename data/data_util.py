@@ -58,8 +58,7 @@ def get_subject_label(s_id, ids_labels):
 
 def create_data_file(config, n_samples, file_path):
     hdf5_file = tables.open_file(file_path, mode='w')
-    # filters = tables.Filters(complevel=5, complib='blosc')
-    filters = tables.Filters(complevel=0)
+    filters = tables.Filters(complevel=5, complib='blosc')
     data_shape = tuple([0, config['n_channels']] + list(config['image_shape']))
     try:
         data_storage = hdf5_file.create_earray(hdf5_file.root, 'data', tables.Float32Atom(), shape=data_shape,
