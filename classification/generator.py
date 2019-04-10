@@ -36,7 +36,9 @@ def add_data(x_list, y_list, data_file, index, config):
     print('in add_data')
     X_data = data_file.root.data[index]
     y_data_o = data_file.root.label[index]
+    print('before keras')
     y_data = keras.utils.to_categorical(y_data_o, num_classes=config['n_classes'])
+    print('after keras')
     x_list.append(X_data)
     y_list.append(y_data)
 
