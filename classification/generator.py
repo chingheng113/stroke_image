@@ -34,6 +34,7 @@ def get_validation_split(data_file, validation_size):
 
 def add_data(x_list, y_list, data_file, index, config):
     print('in add_data')
+    print('before data_file')
     X_data = data_file.root.data[index]
     y_data_o = data_file.root.label[index]
     print('before keras')
