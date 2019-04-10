@@ -60,7 +60,6 @@ if __name__ == '__main__':
                                   epochs=config['batch_size'],
                                   validation_data=validation_generator,
                                   validation_steps=n_validation_steps,
-                                  workers=0,
                                   verbose=1
                                   )
     print('Training done...')
