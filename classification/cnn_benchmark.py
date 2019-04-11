@@ -27,26 +27,36 @@ if __name__ == '__main__':
     data_file = data_util.open_data_file(read_file_path)
     train_generator, validation_generator, n_train_steps, n_validation_steps = generator.get_training_and_validation_generators(data_file, config)
 
+    # AlexNet
     input_lay = Input(shape=config['input_shape'])
-    conv_1 = Conv3D(filters=32, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='same')(input_lay)
+    conv_1 = Conv3D(filters=96, kernel_size=(11, 11, 11), strides=(4, 4, 4), padding='valid')(input_lay)
     nor_1 = BatchNormalization()(conv_1)
     act_1 = Activation('relu')(nor_1)
-    maxp_1 = MaxPooling3D(pool_size=(2, 2, 2))(act_1)
+    maxp_1 = MaxPooling3D(pool_size=(2, 2, 2), strides=(2,2,2), padding='valid')(act_1)
 
-    conv_2 = Conv3D(filters=64, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='same')(maxp_1)
+    conv_2 = Conv3D(filters=256, kernel_size=(11, 11, 11), strides=(1, 1, 1), padding='valid')(maxp_1)
     nor_2 = BatchNormalization()(conv_2)
     act_2 = Activation('relu')(nor_2)
-    maxp_2 = MaxPooling3D(pool_size=(2, 2, 2))(act_2)
+    maxp_2 = MaxPooling3D(pool_size=(2, 2, 2), strides=(2,2,2), padding='valid')(act_2)
 
-    conv_3 = Conv3D(filters=128, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='same')(maxp_2)
+    conv_3 = Conv3D(filters=384, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='valid')(maxp_2)
     nor_3 = BatchNormalization()(conv_3)
     act_3 = Activation('relu')(nor_3)
-    maxp_3 = MaxPooling3D(pool_size=(2, 2, 2))(act_3)
 
-    flat_1 = Flatten()(maxp_3)
-    den_1 = Dense(units=1024, activation='sigmoid')(flat_1)
+    conv_4 = Conv3D(filters=384, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='valid')(act_3)
+    nor_4 = BatchNormalization()(conv_4)
+    act_4 = Activation('relu')(nor_4)
+
+    conv_5 = Conv3D(filters=256, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='valid')(act_4)
+    nor_5 = BatchNormalization()(conv_5)
+    act_5 = Activation('relu')(nor_5)
+    maxp_5 = MaxPooling3D(pool_size=(2, 2, 2), strides=(2,2,2), padding='valid')(act_5)
+
+
+    flat_1 = Flatten()(maxp_5)
+    den_1 = Dense(units=4096, activation='relu')(flat_1)
     nor_4 = BatchNormalization()(den_1)
-    den_2 = Dense(units=512, activation='sigmoid')(nor_4)
+    den_2 = Dense(units=1000, activation='relu')(nor_4)
     nor_5 = BatchNormalization()(den_2)
     output = Dense(units=config['n_classes'], activation='softmax')(nor_5)
     model = Model(inputs=input_lay, outputs=output)
