@@ -44,9 +44,9 @@ if __name__ == '__main__':
     maxp_3 = MaxPooling3D(pool_size=(2, 2, 2))(act_3)
 
     flat_1 = Flatten()(maxp_3)
-    den_1 = Dense(units=100, activation='sigmoid')(flat_1)
+    den_1 = Dense(units=1024, activation='sigmoid')(flat_1)
     nor_4 = BatchNormalization()(den_1)
-    den_2 = Dense(units=50, activation='sigmoid')(nor_4)
+    den_2 = Dense(units=512, activation='sigmoid')(nor_4)
     nor_5 = BatchNormalization()(den_2)
     output = Dense(units=config['n_classes'], activation='softmax')(nor_5)
     model = Model(inputs=input_lay, outputs=output)
