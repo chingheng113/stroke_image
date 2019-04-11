@@ -49,6 +49,7 @@ def add_data(x_list, y_list, data_file, index, config):
 def convert_data(x_list, y_list):
     x = np.asarray(x_list)
     y = np.asarray(y_list)
+    print(y)
     return x, y
 
 
