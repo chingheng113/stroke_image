@@ -19,7 +19,8 @@ else:
     config["all_modalities"] = ['t1', 't1ce', 'flair', 't2']
 config['n_channels'] = len(config["all_modalities"])
 config['input_shape'] = tuple([config['n_channels']] + list(config['image_shape']))
-config['batch_size'] = 2
+config['batch_size'] = 10
+config["n_epochs"] = 500
 
 if __name__ == '__main__':
     read_file_path = data_util.write_data_to_file(config)
@@ -56,7 +57,7 @@ if __name__ == '__main__':
     # no callback yet
     history = model.fit_generator(generator=train_generator,
                                   steps_per_epoch=n_train_steps,
-                                  epochs=config['batch_size'],
+                                  epochs=config["n_epochs"],
                                   validation_data=validation_generator,
                                   validation_steps=n_validation_steps,
                                   verbose=1
