@@ -19,7 +19,7 @@ else:
     config["all_modalities"] = ['t1', 't1ce', 'flair', 't2']
 config['n_channels'] = len(config["all_modalities"])
 config['input_shape'] = tuple([config['n_channels']] + list(config['image_shape']))
-config['batch_size'] = 10
+config['batch_size'] = 2
 
 if __name__ == '__main__':
     read_file_path = data_util.write_data_to_file(config)
@@ -27,21 +27,20 @@ if __name__ == '__main__':
     train_generator, validation_generator, n_train_steps, n_validation_steps = generator.get_training_and_validation_generators(data_file, config)
 
     input_lay = Input(shape=config['input_shape'])
-    conv_1 = Conv3D(filters=64, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='same')(input_lay)
+    conv_1 = Conv3D(filters=8, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='same')(input_lay)
     nor_1 = BatchNormalization()(conv_1)
     act_1 = Activation('relu')(nor_1)
     maxp_1 = MaxPooling3D(pool_size=(2, 2, 2))(act_1)
 
-    conv_2 = Conv3D(filters=128, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='same')(maxp_1)
+    conv_2 = Conv3D(filters=16, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='same')(maxp_1)
     nor_2 = BatchNormalization()(conv_2)
     act_2 = Activation('relu')(nor_2)
     maxp_2 = MaxPooling3D(pool_size=(2, 2, 2))(act_2)
 
-    conv_3 = Conv3D(filters=256, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='same')(maxp_2)
+    conv_3 = Conv3D(filters=24, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='same')(maxp_2)
     nor_3 = BatchNormalization()(conv_3)
     act_3 = Activation('relu')(nor_3)
     maxp_3 = MaxPooling3D(pool_size=(2, 2, 2))(act_3)
-
 
     flat_1 = Flatten()(maxp_3)
     den_1 = Dense(units=100, activation='sigmoid')(flat_1)

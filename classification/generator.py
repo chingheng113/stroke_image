@@ -1,5 +1,6 @@
 import sys, os
 sys.path.append(os.path.abspath(os.path.join('/data/linc9/stroke_image/')))
+# import copy
 import pickle
 import numpy as np
 from random import shuffle
@@ -37,7 +38,6 @@ def add_data(x_list, y_list, data_file, index, config):
     y_data = keras.utils.to_categorical(y_data_o, num_classes=config['n_classes'])
     x_list.append(X_data)
     y_list.append(y_data)
-    return x_list, y_list
 
 
 def convert_data(x_list, y_list):
@@ -47,22 +47,34 @@ def convert_data(x_list, y_list):
 
 
 def data_generator(data_file, index_list, config):
+    # orig_index_list = index_list
     while True:
         x_list = list()
         y_list = list()
+        # index_list = copy.copy(orig_index_list)
         shuffle(index_list)
         while len(index_list) > 0:
             index = index_list.pop()
-            x_list, y_list = add_data(x_list, y_list, data_file, index, config)
-            yield convert_data(x_list, y_list)
-            x_list = list()
-            y_list = list()
+            add_data(x_list, y_list, data_file, index, config)
+            if len(x_list) == config['batch_size'] or (len(index_list) == 0 and len(x_list) > 0):
+                yield convert_data(x_list, y_list)
+                x_list = list()
+                y_list = list()
+
+
+def get_number_of_steps(n_samples, batch_size):
+    if n_samples <= batch_size:
+        return n_samples
+    elif np.remainder(n_samples, batch_size) == 0:
+        return n_samples//batch_size
+    else:
+        return n_samples//batch_size + 1
 
 
 def get_training_and_validation_generators(data_file, config):
     training_list, validation_list = get_validation_split(data_file, validation_size=0.3)
     train_generator = data_generator(data_file, training_list, config)
     validation_generator = data_generator(data_file, validation_list, config)
-    n_train_steps = 3
-    n_validation_steps = 3
-    return train_generator, validation_generator, n_train_steps, n_validation_steps
+    num_training_steps = get_number_of_steps(len(training_list), config['batch_size'])
+    num_validation_steps = get_number_of_steps(len(validation_list), config['batch_size'])
+    return train_generator, validation_generator, num_training_steps , num_validation_steps
