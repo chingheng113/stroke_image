@@ -1,6 +1,6 @@
 import sys, os
 sys.path.append(os.path.abspath(os.path.join('/data/linc9/stroke_image/')))
-# import copy
+import copy
 import pickle
 import numpy as np
 from random import shuffle
@@ -47,11 +47,11 @@ def convert_data(x_list, y_list):
 
 
 def data_generator(data_file, index_list, config):
-    # orig_index_list = index_list
+    orig_index_list = index_list
     while True:
         x_list = list()
         y_list = list()
-        # index_list = copy.copy(orig_index_list)
+        index_list = copy.copy(orig_index_list)
         shuffle(index_list)
         while len(index_list) > 0:
             index = index_list.pop()
