@@ -6,6 +6,12 @@ import numpy as np
 from random import shuffle
 import keras.optimizers
 
+# *************************************************************************
+# make sure we are using pytables (conda install pytables), not tables !!!
+# otherwise the Segmentation fault will drive you nuts...
+# https://github.com/ellisdg/3DUnetCNN/issues/82
+# https://github.com/ellisdg/3DUnetCNN/issues/58
+# *************************************************************************
 
 def pickle_dump(item, out_file):
     with open(out_file, "wb") as opened_file:
