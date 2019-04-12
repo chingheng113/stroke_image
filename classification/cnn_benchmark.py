@@ -28,29 +28,32 @@ if __name__ == '__main__':
     train_generator, validation_generator, n_train_steps, n_validation_steps = generator.get_training_and_validation_generators(data_file, config)
 
     # AlexNet
+    # con dimension = floor(((n-f+2p)/s)+1)
+    # pooling dimension  = floor(((n-f)/s)+1)
+
     input_lay = Input(shape=config['input_shape'])
-    conv_1 = Conv3D(filters=96, kernel_size=(11, 11, 11), strides=(4, 4, 4), padding='valid')(input_lay)
+    conv_1 = Conv3D(filters=96, kernel_size=(11, 11, 11), strides=(4, 4, 4), padding='same')(input_lay)
     nor_1 = BatchNormalization()(conv_1)
     act_1 = Activation('relu')(nor_1)
-    maxp_1 = MaxPooling3D(pool_size=(2, 2, 2), strides=(2,2,2), padding='valid')(act_1)
+    maxp_1 = MaxPooling3D(pool_size=(2, 2, 2), strides=(2, 2, 2), padding='same')(act_1)
 
-    conv_2 = Conv3D(filters=256, kernel_size=(11, 11, 11), strides=(1, 1, 1), padding='valid')(maxp_1)
+    conv_2 = Conv3D(filters=256, kernel_size=(11, 11, 11), strides=(1, 1, 1), padding='same')(maxp_1)
     nor_2 = BatchNormalization()(conv_2)
     act_2 = Activation('relu')(nor_2)
-    maxp_2 = MaxPooling3D(pool_size=(2, 2, 2), strides=(2,2,2), padding='valid')(act_2)
+    maxp_2 = MaxPooling3D(pool_size=(2, 2, 2), strides=(2, 2, 2), padding='same')(act_2)
 
-    conv_3 = Conv3D(filters=384, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='valid')(maxp_2)
+    conv_3 = Conv3D(filters=384, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='same')(maxp_2)
     nor_3 = BatchNormalization()(conv_3)
     act_3 = Activation('relu')(nor_3)
 
-    conv_4 = Conv3D(filters=384, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='valid')(act_3)
+    conv_4 = Conv3D(filters=384, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='same')(act_3)
     nor_4 = BatchNormalization()(conv_4)
     act_4 = Activation('relu')(nor_4)
 
-    conv_5 = Conv3D(filters=256, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='valid')(act_4)
+    conv_5 = Conv3D(filters=256, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='same')(act_4)
     nor_5 = BatchNormalization()(conv_5)
     act_5 = Activation('relu')(nor_5)
-    maxp_5 = MaxPooling3D(pool_size=(2, 2, 2), strides=(2,2,2), padding='valid')(act_5)
+    maxp_5 = MaxPooling3D(pool_size=(2, 2, 2), strides=(2, 2, 2), padding='same')(act_5)
 
 
     flat_1 = Flatten()(maxp_5)
@@ -63,7 +66,7 @@ if __name__ == '__main__':
 
     opt = keras.optimizers.Adadelta()
     model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
-    # print(metricsodel.summary())
+    print(model.summary())
     # no callback yet
     history = model.fit_generator(generator=train_generator,
                                   steps_per_epoch=n_train_steps,
