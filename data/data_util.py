@@ -31,17 +31,19 @@ def get_ids_labels(mc):
     return id_label
 
 
-def get_img_paths(mc):
-    img_paths = ''
-    if mc == 'mri':
-        # to be continue...
-        pass
-    elif mc == 'ct':
-        ct_img_path = os.path.join(current_path, 'ct')
-        img_paths = glob.glob(os.path.join(ct_img_path, '*_ct.nii'))
-    else:
-        print('wrong parameter')
+def get_ct_img_paths():
+    ct_img_path = os.path.join(current_path, 'ct')
+    img_paths = glob.glob(os.path.join(ct_img_path, '*_ct.nii'))
     return img_paths
+
+
+def get_mr_sequence_paths(config):
+    mri_path = os.path.join(current_path, 'mri')
+    sequence_paths = []
+    for s in config['all_sequences']:
+        sequence_path = os.path.join(mri_path, 'n4_'+s)
+        sequence_paths.append(sequence_path)
+    return sequence_paths
 
 
 def get_subject_id_from_path(img_path):
@@ -56,7 +58,7 @@ def get_subject_label(s_id, ids_labels):
     return label
 
 
-def create_data_file(config, n_samples, file_path):
+def create_ct_data_file(config, n_samples, file_path):
     hdf5_file = tables.open_file(file_path, mode='w')
     filters = tables.Filters(complevel=5, complib='blosc')
     data_shape = tuple([0, config['n_channels']] + list(config['image_shape']))
@@ -65,6 +67,33 @@ def create_data_file(config, n_samples, file_path):
                                                filters=filters, expectedrows=n_samples)
         label_storage = hdf5_file.create_earray(hdf5_file.root, 'label', tables.Float32Atom(), shape=(0,),
                                                filters=filters, expectedrows=n_samples)
+    except Exception as e:
+        # If something goes wrong, delete the incomplete data file
+        os.remove(file_path)
+        raise e
+    return hdf5_file, data_storage, label_storage
+
+
+def create_mr_data_file(config, sequence_paths, file_path):
+    sample_size = []
+    for sequence_path in sequence_paths:
+        img_paths = glob.glob(os.path.join(sequence_path, '*.nii'))
+        sample_size.append(len(img_paths))
+
+    if np.unique(sample_size).shape[0] <= 1:
+        # check all sequence have same sample size
+        n_samples = sample_size[0]
+    else:
+        raise Exception('the sample size if each sequence is not consist')
+
+    hdf5_file = tables.open_file(file_path, mode='w')
+    filters = tables.Filters(complevel=5, complib='blosc')
+    data_shape = tuple([0, config['n_channels']] + list(config['image_shape']))
+    try:
+        data_storage = hdf5_file.create_earray(hdf5_file.root, 'data', tables.Float32Atom(), shape=data_shape,
+                                               filters=filters, expectedrows=n_samples)
+        label_storage = hdf5_file.create_earray(hdf5_file.root, 'label', tables.Float32Atom(), shape=(0,),
+                                                filters=filters, expectedrows=n_samples)
     except Exception as e:
         # If something goes wrong, delete the incomplete data file
         os.remove(file_path)
@@ -85,23 +114,49 @@ def write_ct_image_label_to_file(config, img_paths, data_storage, label_storage)
     return data_storage, label_storage
 
 
+def write_mr_image_label_to_file(config, sequence_paths, data_storage, label_storage):
+    # At this monent, we sure that sample size of each sequence are consist
+    # But I still want to go one by one to make sure the order of samples and label is correct
+    # it is very inefficient way, but... be careful
+    ids_labels = get_ids_labels(config['which_machine'])
+    mri_path = os.path.join(current_path, 'mri')
+    img_paths_for_loop = glob.glob(os.path.join(sequence_paths[0], '*.nii'))
+    for img_path_for_loop in img_paths_for_loop:
+        sid = get_subject_id_from_path(img_path_for_loop)
+        mr_img_list = []
+        for s in config['all_sequences']:
+            sq_path = os.path.join(mri_path, 'n4_'+s)
+            read_path = os.path.join(sq_path, sid+'_'+s.upper()+'.nii')
+            img = sitk.ReadImage(read_path)
+            img_data = sitk.GetArrayFromImage(img).T
+            mr_img_list.append(img_data)
+        print(sid)
+        data_storage.append(np.asarray(mr_img_list[:config['n_channels']])[np.newaxis])
+        true_label = get_subject_label(sid, ids_labels)
+        label_storage.append(true_label)
+    return data_storage, label_storage
+
+
 def write_data_to_file(config):
     file_path = os.path.join(current_path, config['which_machine'], config['which_machine'] + '_data.h5')
-    img_paths = get_img_paths(config['which_machine'])
-    n_samples = len(img_paths)
-    hdf5_file, data_storage, label_storage = create_data_file(config, n_samples, file_path)
     if config['which_machine'] == 'ct':
+        img_paths = get_ct_img_paths()
+        n_samples = len(img_paths)
+        hdf5_file, data_storage, label_storage = create_ct_data_file(config, n_samples, file_path)
         write_ct_image_label_to_file(config, img_paths, data_storage, label_storage)
     else:
-        # MRI...to be continue...
-        pass
-
+        # MRI
+        sequence_paths = get_mr_sequence_paths(config)
+        hdf5_file, data_storage, label_storage = create_mr_data_file(config, sequence_paths, file_path)
+        write_mr_image_label_to_file(config, sequence_paths, data_storage, label_storage)
+        a = 1
     hdf5_file.close()
     return file_path
 
 
 def open_data_file(filename, readwrite="r"):
     return tables.open_file(filename, readwrite)
+
 
 if __name__ =='__main__':
     config = dict()

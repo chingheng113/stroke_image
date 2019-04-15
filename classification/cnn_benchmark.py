@@ -10,14 +10,16 @@ import keras.optimizers
 
 backend.set_image_data_format('channels_first')
 config = dict()
-config['which_machine'] = 'ct'
-config['image_shape'] = (128, 128, 28) # CHANNEL, WIDTH, HEIGHT, DEPTH
+config['which_machine'] = 'mri'
+# config['image_shape'] = (128, 128, 28) # CHANNEL, WIDTH, HEIGHT, DEPTH
+config['image_shape'] = (256, 256, 20) # CHANNEL, WIDTH, HEIGHT, DEPTH
 config['n_classes'] = 2
 if config['which_machine'] == 'ct':
-    config['all_modalities'] = ['ct']
+    config['all_sequences'] = ['ct']
 else:
-    config["all_modalities"] = ['t1', 't1ce', 'flair', 't2']
-config['n_channels'] = len(config["all_modalities"])
+    # MRI
+    config["all_sequences"] = ['dwi', 'flair']
+config['n_channels'] = len(config["all_sequences"])
 config['input_shape'] = tuple([config['n_channels']] + list(config['image_shape']))
 config['batch_size'] = 10
 config["n_epochs"] = 500
