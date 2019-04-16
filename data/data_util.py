@@ -19,12 +19,13 @@ def get_ids_labels(mc):
         ids = df[['MRI HEME #', 'CT HEME #']].astype(int)
     # label
     labels = df[['Diagnosis Classification']]
+    # ischmic (1) vs. non-ischemic (0)
     replace_dic = {'Hemorrhage(Primary Hematoma)': 0,
                    'Hemorrhage(SDH)': 0,
                    'Hemorrhage(SDH), Other Diagnosis': 0,
                    'Ischemic Stroke': 1,
-                   'TIA': 2,
-                   'Other Diagnosis': 3
+                   'TIA': 0,
+                   'Other Diagnosis': 0
                    }
     labels.replace(replace_dic, inplace=True)
     id_label = pd.concat([ids, labels], axis=1)
@@ -133,6 +134,7 @@ def write_mr_image_label_to_file(config, sequence_paths, data_storage, label_sto
         print(sid)
         data_storage.append(np.asarray(mr_img_list[:config['n_channels']])[np.newaxis])
         true_label = get_subject_label(sid, ids_labels)
+        print(true_label)
         label_storage.append(true_label)
     return data_storage, label_storage
 
