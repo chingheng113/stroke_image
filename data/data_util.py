@@ -131,10 +131,8 @@ def write_mr_image_label_to_file(config, sequence_paths, data_storage, label_sto
             img = sitk.ReadImage(read_path)
             img_data = sitk.GetArrayFromImage(img).T
             mr_img_list.append(img_data)
-        print(sid)
         data_storage.append(np.asarray(mr_img_list[:config['n_channels']])[np.newaxis])
         true_label = get_subject_label(sid, ids_labels)
-        print(true_label)
         label_storage.append(true_label)
     return data_storage, label_storage
 
