@@ -34,12 +34,12 @@ if __name__ == '__main__':
     # pooling dimension  = floor(((n-f)/s)+1)
 
     input_lay = Input(shape=config['input_shape'])
-    conv_1 = Conv3D(filters=96, kernel_size=(11, 11, 11), strides=(4, 4, 4), padding='same')(input_lay)
+    conv_1 = Conv3D(filters=96, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='same')(input_lay)
     nor_1 = BatchNormalization()(conv_1)
     act_1 = Activation('relu')(nor_1)
     maxp_1 = MaxPooling3D(pool_size=(2, 2, 2), strides=(2, 2, 2), padding='same')(act_1)
 
-    conv_2 = Conv3D(filters=256, kernel_size=(11, 11, 11), strides=(1, 1, 1), padding='same')(maxp_1)
+    conv_2 = Conv3D(filters=256, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='same')(maxp_1)
     nor_2 = BatchNormalization()(conv_2)
     act_2 = Activation('relu')(nor_2)
     maxp_2 = MaxPooling3D(pool_size=(2, 2, 2), strides=(2, 2, 2), padding='same')(act_2)
