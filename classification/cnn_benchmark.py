@@ -79,7 +79,7 @@ if __name__ == '__main__':
                                   )
     print('Training done...')
 
-    X_data = data_util.open_data_file(read_file_path).root.data[0:20]
+    X_data = data_util.open_data_file(read_file_path).root.data[:]
     # y_data_o = data_util.open_data_file(read_file_path).root.label[0:20]
     # n_classes = np.unique(y_data_o).shape[0]
     # y_data = keras.utils.to_categorical(y_data_o, num_classes=n_classes)
