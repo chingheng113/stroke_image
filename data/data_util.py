@@ -107,9 +107,10 @@ def write_ct_image_label_to_file(config, img_paths, data_storage, label_storage)
     ids_labels = get_ids_labels(config['which_machine'])
     for img_path in img_paths:
         img = sitk.ReadImage(img_path)
+        img_arr = sitk.GetArrayFromImage(img).T
+        ct_img_list.append(img_arr)
         sid = get_subject_id_from_path(img_path)
         true_label = get_subject_label(sid, ids_labels)
-        ct_img_list.append(sitk.GetArrayFromImage(img).T)
         data_storage.append(np.asarray(ct_img_list[:config['n_channels']])[np.newaxis])
         label_storage.append(true_label)
     return data_storage, label_storage
