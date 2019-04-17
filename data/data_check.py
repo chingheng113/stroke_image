@@ -1,9 +1,10 @@
 import SimpleITK as sitk
 import pandas as pd
 import glob
-import os
+import sys, os
 import numpy as np
 from data import data_util
+sys.path.append(os.path.abspath(os.path.join('/data/linc9/stroke_image/')))
 current_path = os.path.dirname(__file__)
 
 if __name__ == '__main__':
