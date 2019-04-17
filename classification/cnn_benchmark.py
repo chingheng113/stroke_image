@@ -77,7 +77,7 @@ if __name__ == '__main__':
                                   validation_steps=n_validation_steps,
                                   verbose=1
                                   )
-    print('Training done...')
+    print('Training done..')
 
     X_data = data_util.open_data_file(read_file_path).root.data[:]
     y_data_o = data_util.open_data_file(read_file_path).root.label[:]
