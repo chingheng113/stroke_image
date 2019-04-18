@@ -26,7 +26,9 @@ if __name__ == '__main__':
     data_file = data_util.open_data_file(read_file_path)
     train_generator, validation_generator, n_train_steps, n_validation_steps = generator.get_training_and_validation_generators(data_file, config)
 
-    model = models.get_AlexNet(config)
+    # model = models.get_AlexNet(config)
+    model = models.get_simple_AlexNet(config)
+
     print(model.summary())
     history = model.fit_generator(generator=train_generator,
                                   steps_per_epoch=n_train_steps,
