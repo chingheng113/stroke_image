@@ -4,6 +4,7 @@ import glob
 import os
 import numpy as np
 import tables
+import pickle
 
 current_path = os.path.dirname(__file__)
 
@@ -157,6 +158,11 @@ def write_data_to_file(config):
 
 def open_data_file(filename, readwrite="r"):
     return tables.open_file(filename, readwrite)
+
+
+def save_history(history):
+    with open('/trainHistoryDict', 'wb') as file_pi:
+        pickle.dump(history.history, file_pi)
 
 
 if __name__ =='__main__':
