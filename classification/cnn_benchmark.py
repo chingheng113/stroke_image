@@ -62,9 +62,9 @@ if __name__ == '__main__':
     den_6 = Dense(units=4096)(flat_6)
     nor_6 = BatchNormalization()(den_6)
     act_6 = Activation('relu')(nor_6)
-    drop_6 = Dropout(0.4)(act_6)
+    drop_6 = Dropout(0.5)(act_6)
 
-    den_7 = Dense(units=4096)(drop_6)
+    den_7 = Dense(units=2048)(drop_6)
     nor_7 = BatchNormalization()(den_7)
     act_7 = Activation('relu')(nor_7)
     drop_7 = Dropout(0.4)(act_7)
