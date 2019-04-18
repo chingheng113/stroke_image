@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 def plot_training_acc(model_name):
-    with open(model_name+'trainHistory.pickle', 'rb') as f:
+    with open(model_name+'_trainHistory.pickle', 'rb') as f:
         history = pickle.load(f)
         plt.plot(history['acc'])
         plt.plot(history['val_acc'])
@@ -15,7 +15,7 @@ def plot_training_acc(model_name):
 
 
 def plot_training_loss(model_name):
-    with open(model_name+'trainHistory.pickle', 'rb') as f:
+    with open(model_name+'_trainHistory.pickle', 'rb') as f:
         history = pickle.load(f)
         plt.plot(history['loss'])
         plt.plot(history['val_loss'])
