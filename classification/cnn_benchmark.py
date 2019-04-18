@@ -58,12 +58,23 @@ if __name__ == '__main__':
     maxp_5 = MaxPooling3D(pool_size=(2, 2, 2), strides=(2, 2, 2), padding='same')(act_5)
 
 
-    flat_1 = Flatten()(maxp_5)
-    den_1 = Dense(units=4096, activation='relu')(flat_1)
-    nor_4 = BatchNormalization()(den_1)
-    den_2 = Dense(units=1000, activation='relu')(nor_4)
-    nor_5 = BatchNormalization()(den_2)
-    output = Dense(units=config['n_classes'], activation='softmax')(nor_5)
+    flat_6 = Flatten()(maxp_5)
+    den_6 = Dense(units=4096)(flat_6)
+    nor_6 = BatchNormalization()(den_6)
+    act_6 = Activation('relu')(nor_6)
+    drop_6 = Dropout(0.4)(act_6)
+
+    den_7 = Dense(units=4096)(drop_6)
+    nor_7 = BatchNormalization()(den_7)
+    act_7 = Activation('relu')(nor_7)
+    drop_7 = Dropout(0.4)(act_7)
+
+    den_8 = Dense(units=1000)(drop_7)
+    nor_8 = BatchNormalization()(den_8)
+    act_8 = Activation('relu')(nor_8)
+    drop_8 = Dropout(0.4)(act_8)
+
+    output = Dense(units=config['n_classes'], activation='softmax')(drop_8)
     model = Model(inputs=input_lay, outputs=output)
 
     opt = keras.optimizers.adam()
