@@ -22,7 +22,7 @@ else:
 config['n_channels'] = len(config["all_sequences"])
 config['input_shape'] = tuple([config['n_channels']] + list(config['image_shape']))
 config['batch_size'] = 10
-config["n_epochs"] = 3
+config["n_epochs"] = 1
 
 if __name__ == '__main__':
     read_file_path = data_util.write_data_to_file(config)

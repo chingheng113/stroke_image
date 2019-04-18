@@ -160,7 +160,7 @@ def open_data_file(filename, readwrite="r"):
 
 
 def save_history(history):
-    save_path = os.path.join('..', 'result')
+    save_path = os.path.join('..', 'results')
     with open(save_path+'trainHistoryDict', 'wb') as file_pi:
         pickle.dump(history.history, file_pi)
 
