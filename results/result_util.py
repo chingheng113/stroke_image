@@ -2,8 +2,8 @@ import pickle
 import matplotlib.pyplot as plt
 
 
-def plot_training_acc():
-    with open('trainHistoryDict', 'rb') as f:
+def plot_training_acc(model_name):
+    with open(model_name+'trainHistory.pickle', 'rb') as f:
         history = pickle.load(f)
         plt.plot(history['acc'])
         plt.plot(history['val_acc'])
@@ -14,8 +14,8 @@ def plot_training_acc():
         plt.show()
 
 
-def plot_training_loss():
-    with open('trainHistoryDict', 'rb') as f:
+def plot_training_loss(model_name):
+    with open(model_name+'trainHistory.pickle', 'rb') as f:
         history = pickle.load(f)
         plt.plot(history['loss'])
         plt.plot(history['val_loss'])
@@ -27,5 +27,6 @@ def plot_training_loss():
 
 
 if __name__ == '__main__':
-    plot_training_acc()
-    plot_training_loss()
+    model_name = 'AlexNet'
+    plot_training_acc(model_name)
+    plot_training_loss(model_name)

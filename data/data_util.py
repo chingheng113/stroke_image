@@ -159,8 +159,8 @@ def open_data_file(filename, readwrite="r"):
     return tables.open_file(filename, readwrite)
 
 
-def save_history(history):
-    save_path = os.path.join('..', 'results', 'trainHistoryDict')
+def save_history(model_name, history):
+    save_path = os.path.join('..', 'results', model_name+'_trainHistory.pickle')
     print(save_path)
     with open(save_path, 'wb') as file_pi:
         pickle.dump(history.history, file_pi)

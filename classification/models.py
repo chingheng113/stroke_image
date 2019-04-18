@@ -48,7 +48,7 @@ def get_AlexNet(config):
     drop_8 = Dropout(0.4)(act_8)
 
     output = Dense(units=config['n_classes'], activation='softmax')(drop_8)
-    model = Model(inputs=input_lay, outputs=output)
+    model = Model(inputs=input_lay, outputs=output, name='AlexNet')
 
     opt = keras.optimizers.adam()
     model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
