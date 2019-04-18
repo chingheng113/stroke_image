@@ -66,8 +66,8 @@ if __name__ == '__main__':
     output = Dense(units=config['n_classes'], activation='softmax')(nor_5)
     model = Model(inputs=input_lay, outputs=output)
 
-    opt = keras.optimizers.Adadelta()
-    model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
+    opt = keras.optimizers.adam()
+    model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
     print(model.summary())
     # no callback yet
     history = model.fit_generator(generator=train_generator,
