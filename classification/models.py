@@ -76,17 +76,17 @@ def get_simple_AlexNet(config):
     den_6 = Dense(units=1024)(flat_6)
     nor_6 = BatchNormalization()(den_6)
     act_6 = Activation('relu')(nor_6)
-    drop_6 = Dropout(0.5)(act_6)
+    drop_6 = Dropout(0.6)(act_6)
 
     den_7 = Dense(units=512)(drop_6)
     nor_7 = BatchNormalization()(den_7)
     act_7 = Activation('relu')(nor_7)
-    drop_7 = Dropout(0.4)(act_7)
+    drop_7 = Dropout(0.6)(act_7)
 
     den_8 = Dense(units=256)(drop_7)
     nor_8 = BatchNormalization()(den_8)
     act_8 = Activation('relu')(nor_8)
-    drop_8 = Dropout(0.4)(act_8)
+    drop_8 = Dropout(0.6)(act_8)
 
     output = Dense(units=config['n_classes'], activation='softmax')(drop_8)
     model = Model(inputs=input_lay, outputs=output, name='simple_AlexNet')
