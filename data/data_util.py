@@ -151,7 +151,6 @@ def write_data_to_file(config):
         sequence_paths = get_mr_sequence_paths(config)
         hdf5_file, data_storage, label_storage = create_mr_data_file(config, sequence_paths, file_path)
         write_mr_image_label_to_file(config, sequence_paths, data_storage, label_storage)
-        a = 1
     hdf5_file.close()
     return file_path
 
@@ -161,7 +160,8 @@ def open_data_file(filename, readwrite="r"):
 
 
 def save_history(history):
-    with open('/trainHistoryDict', 'wb') as file_pi:
+    save_path = os.path.join('..', 'result')
+    with open(save_path+'trainHistoryDict', 'wb') as file_pi:
         pickle.dump(history.history, file_pi)
 
 
