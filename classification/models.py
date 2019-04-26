@@ -2,6 +2,7 @@ from keras.engine import Model
 from keras.layers import Dense, Conv3D, MaxPooling3D, Flatten, Input, Activation, BatchNormalization, Dropout
 import keras.optimizers
 
+
 def get_AlexNet(config):
     # AlexNet
     # con dimension = floor(((n-f+2p)/s)+1)
