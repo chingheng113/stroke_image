@@ -39,8 +39,8 @@ def get_ct_img_paths():
     return img_paths
 
 
-def get_mr_sequence_paths(config):
-    mri_path = os.path.join(current_path, 'mri')
+def get_mr_sequence_paths(config, training_test):
+    mri_path = os.path.join(current_path, 'mri', training_test)
     sequence_paths = []
     for s in config['all_sequences']:
         sequence_path = os.path.join(mri_path, 'n4_'+s)
@@ -117,12 +117,12 @@ def write_ct_image_label_to_file(config, img_paths, data_storage, label_storage)
     return data_storage, label_storage
 
 
-def write_mr_image_label_to_file(config, sequence_paths, data_storage, label_storage):
+def write_mr_image_label_to_file(config, training_test, sequence_paths, data_storage, label_storage):
     # At this monent, we sure that sample size of each sequence are consist
     # But I still want to go one by one to make sure the order of samples and label is correct
     # it is very inefficient way, but... be careful
     ids_labels = get_ids_labels(config['which_machine'])
-    mri_path = os.path.join(current_path, 'mri')
+    mri_path = os.path.join(current_path, 'mri', training_test)
     img_paths_for_loop = glob.glob(os.path.join(sequence_paths[0], '*.nii'))
     for img_path_for_loop in img_paths_for_loop:
         sid = get_subject_id_from_path(img_path_for_loop)
@@ -139,8 +139,10 @@ def write_mr_image_label_to_file(config, sequence_paths, data_storage, label_sto
     return data_storage, label_storage
 
 
-def write_data_to_file(config):
-    file_path = os.path.join(current_path, config['which_machine'], config['which_machine'] + '_data.h5')
+def write_data_to_file(config, training_test):
+    if training_test != 'training' and training_test != 'test':
+        raise Exception('Must be training or test')
+    file_path = os.path.join(current_path, config['which_machine'], config['which_machine'] + '_data_'+training_test+'.h5')
     if config['which_machine'] == 'ct':
         img_paths = get_ct_img_paths()
         n_samples = len(img_paths)
@@ -148,9 +150,9 @@ def write_data_to_file(config):
         write_ct_image_label_to_file(config, img_paths, data_storage, label_storage)
     else:
         # MRI
-        sequence_paths = get_mr_sequence_paths(config)
+        sequence_paths = get_mr_sequence_paths(config, training_test)
         hdf5_file, data_storage, label_storage = create_mr_data_file(config, sequence_paths, file_path)
-        write_mr_image_label_to_file(config, sequence_paths, data_storage, label_storage)
+        write_mr_image_label_to_file(config, training_test, sequence_paths, data_storage, label_storage)
     hdf5_file.close()
     return file_path
 

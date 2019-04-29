@@ -7,8 +7,7 @@ import keras.optimizers
 
 backend.set_image_data_format('channels_first')
 config = dict()
-config['which_machine'] = 'mri'
-# config['image_shape'] = (128, 128, 28) # CHANNEL, WIDTH, HEIGHT, DEPTH
+config['which_machine'] = 'mri' # Need to rewrite 'write_ct_image_label_to_file' for training and testing
 config['image_shape'] = (256, 256, 20) # CHANNEL, WIDTH, HEIGHT, DEPTH
 config['n_classes'] = 2
 if config['which_machine'] == 'ct':
@@ -22,8 +21,8 @@ config['batch_size'] = 30
 config["n_epochs"] = 150
 
 if __name__ == '__main__':
-    read_file_path = data_util.write_data_to_file(config)
-    data_file = data_util.open_data_file(read_file_path)
+    read_training_file_path = data_util.write_data_to_file(config, 'training')
+    data_file = data_util.open_data_file(read_training_file_path)
     train_generator, validation_generator, n_train_steps, n_validation_steps = generator.get_training_and_validation_generators(data_file, config)
 
     # model = models.get_AlexNet(config)
@@ -40,8 +39,9 @@ if __name__ == '__main__':
     data_util.save_history(model.name, history)
     print('Training done..')
 
-    X_data = data_util.open_data_file(read_file_path).root.data[:]
-    y_data_o = data_util.open_data_file(read_file_path).root.label[:]
+    read_test_file_path = data_util.write_data_to_file(config, 'test')
+    X_data = data_util.open_data_file(read_test_file_path).root.data[:]
+    y_data_o = data_util.open_data_file(read_test_file_path).root.label[:]
     y_data = keras.utils.to_categorical(y_data_o, num_classes=config['n_classes'])
     # score = model.predict(X_data)
     loss, acc = model.evaluate(X_data, y_data, verbose=0)
