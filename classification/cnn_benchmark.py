@@ -18,13 +18,12 @@ else:
 config['n_channels'] = len(config["all_sequences"])
 config['input_shape'] = tuple([config['n_channels']] + list(config['image_shape']))
 config['batch_size'] = 30
-config["n_epochs"] = 150
+config["n_epochs"] = 10
 
 if __name__ == '__main__':
     read_training_file_path = data_util.write_data_to_file(config, 'training')
     data_file = data_util.open_data_file(read_training_file_path)
     train_generator, validation_generator, n_train_steps, n_validation_steps = generator.get_training_and_validation_generators(data_file, config)
-
     # model = models.get_AlexNet(config)
     model = models.get_simple_AlexNet(config)
 
@@ -39,7 +38,7 @@ if __name__ == '__main__':
     data_util.save_history(model.name, history)
     print('Training done..')
 
-    read_test_file_path = data_util.write_data_to_file(config, 'test')
+    read_test_file_path = data_util.write_data_to_file(config, 'testing')
     X_data = data_util.open_data_file(read_test_file_path).root.data[:]
     y_data_o = data_util.open_data_file(read_test_file_path).root.label[:]
     y_data = keras.utils.to_categorical(y_data_o, num_classes=config['n_classes'])

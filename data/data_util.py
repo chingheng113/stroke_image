@@ -140,7 +140,7 @@ def write_mr_image_label_to_file(config, training_test, sequence_paths, data_sto
 
 
 def write_data_to_file(config, training_test):
-    if training_test != 'training' and training_test != 'test':
+    if training_test != 'training' and training_test != 'testing':
         raise Exception('Must be training or test')
     file_path = os.path.join(current_path, config['which_machine'], config['which_machine'] + '_data_'+training_test+'.h5')
     if config['which_machine'] == 'ct':
