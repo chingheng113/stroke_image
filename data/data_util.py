@@ -108,7 +108,7 @@ def write_ct_image_label_to_file(config, img_paths, data_storage, label_storage)
     ids_labels = get_ids_labels(config['which_machine'])
     for img_path in img_paths:
         img = sitk.ReadImage(img_path)
-        img_arr = sitk.GetArrayFromImage(img).T
+        img_arr = sitk.GetArrayFromImage(img)
         ct_img_list.append(img_arr)
         sid = get_subject_id_from_path(img_path)
         true_label = get_subject_label(sid, ids_labels)
@@ -131,7 +131,7 @@ def write_mr_image_label_to_file(config, training_test, sequence_paths, data_sto
             sq_path = os.path.join(mri_path, 'n4_'+s)
             read_path = os.path.join(sq_path, sid+'_'+s.upper()+'.nii')
             img = sitk.ReadImage(read_path)
-            img_data = sitk.GetArrayFromImage(img).T
+            img_data = sitk.GetArrayFromImage(img)
             mr_img_list.append(img_data)
         data_storage.append(np.asarray(mr_img_list[:config['n_channels']])[np.newaxis])
         true_label = get_subject_label(sid, ids_labels)
@@ -139,10 +139,10 @@ def write_mr_image_label_to_file(config, training_test, sequence_paths, data_sto
     return data_storage, label_storage
 
 
-def write_data_to_file(config, training_test):
-    if training_test != 'training' and training_test != 'testing':
-        raise Exception('Must be training or test')
-    file_path = os.path.join(current_path, config['which_machine'], config['which_machine'] + '_data_'+training_test+'.h5')
+def write_data_to_file(config, training_or_testing):
+    if training_or_testing != 'training' and training_or_testing != 'testing':
+        raise Exception('Must be training or testing')
+    file_path = os.path.join(current_path, config['which_machine'], config['which_machine'] + '_data_'+training_or_testing+'.h5')
     if config['which_machine'] == 'ct':
         img_paths = get_ct_img_paths()
         n_samples = len(img_paths)
@@ -150,9 +150,9 @@ def write_data_to_file(config, training_test):
         write_ct_image_label_to_file(config, img_paths, data_storage, label_storage)
     else:
         # MRI
-        sequence_paths = get_mr_sequence_paths(config, training_test)
+        sequence_paths = get_mr_sequence_paths(config, training_or_testing)
         hdf5_file, data_storage, label_storage = create_mr_data_file(config, sequence_paths, file_path)
-        write_mr_image_label_to_file(config, training_test, sequence_paths, data_storage, label_storage)
+        write_mr_image_label_to_file(config, training_or_testing, sequence_paths, data_storage, label_storage)
     hdf5_file.close()
     return file_path
 

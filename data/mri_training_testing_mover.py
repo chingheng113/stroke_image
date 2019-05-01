@@ -60,16 +60,5 @@ if __name__ == '__main__':
         test_id = str(row['MRI HEME #'])
         if test_id not in ['250', '230', '316', '425', '210', '161', '185', '410']:
             shutil.copy(os.path.join(source_path, 'n4_dwi', test_id + '_DWI.nii'), testing_dwi_path)
-            shutil.copy(os.path.join(source_path, 'n4_dwi_L10', test_id + '_DWI_RL10.nii'), testing_dwi_path)
-            shutil.copy(os.path.join(source_path, 'n4_dwi_R10', test_id + '_DWI_RR10.nii'), testing_dwi_path)
-            shutil.copy(os.path.join(source_path, 'n4_dwi_flip', test_id + '_DWI_F.nii'), testing_dwi_path)
-            shutil.copy(os.path.join(source_path, 'n4_dwi_flip_L10', test_id + '_DWI_F_RL10.nii'), testing_dwi_path)
-            shutil.copy(os.path.join(source_path, 'n4_dwi_flip_R10', test_id + '_DWI_F_RR10.nii'), testing_dwi_path)
             shutil.copy(os.path.join(source_path, 'n4_flair', test_id + '_FLAIR.nii'), testing_flair_path)
-            shutil.copy(os.path.join(source_path, 'n4_flair_L10', test_id + '_FLAIR_RL10.nii'), testing_flair_path)
-            shutil.copy(os.path.join(source_path, 'n4_flair_R10', test_id + '_FLAIR_RR10.nii'), testing_flair_path)
-            shutil.copy(os.path.join(source_path, 'n4_flair_flip', test_id + '_FLAIR_F.nii'), testing_flair_path)
-            shutil.copy(os.path.join(source_path, 'n4_flair_flip_L10', test_id + '_FLAIR_F_RL10.nii'), testing_flair_path)
-            shutil.copy(os.path.join(source_path, 'n4_flair_flip_R10', test_id + '_FLAIR_F_RR10.nii'), testing_flair_path)
-
 

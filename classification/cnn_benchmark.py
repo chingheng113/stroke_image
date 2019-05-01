@@ -8,7 +8,7 @@ import keras.optimizers
 backend.set_image_data_format('channels_first')
 config = dict()
 config['which_machine'] = 'mri' # Need to rewrite 'write_ct_image_label_to_file' for training and testing
-config['image_shape'] = (256, 256, 20) # CHANNEL, WIDTH, HEIGHT, DEPTH
+config['image_shape'] = (20, 256, 256) # CHANNEL, DEPTH, WIDTH, HEIGHT
 config['n_classes'] = 2
 if config['which_machine'] == 'ct':
     config['all_sequences'] = ['ct']
