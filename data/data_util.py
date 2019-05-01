@@ -86,7 +86,7 @@ def create_mr_data_file(config, sequence_paths, file_path):
         # check all sequence have same sample size
         n_samples = sample_size[0]
     else:
-        raise Exception('the sample size if each sequence is not consist')
+        raise Exception('the sample size of each sequence is not consist')
 
     hdf5_file = tables.open_file(file_path, mode='w')
     filters = tables.Filters(complevel=5, complib='blosc')

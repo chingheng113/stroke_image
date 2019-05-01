@@ -1,8 +1,10 @@
 from sklearn.model_selection import train_test_split
 import pandas as pd
 import glob
-import os
+import sys, os
 import shutil
+sys.path.append(os.path.abspath(os.path.join('/data/linc9/stroke_image/')))
+from data import skip_ids
 
 current_path = os.path.dirname(__file__)
 source_path = os.path.join(current_path, 'mri_all')
@@ -42,7 +44,7 @@ if __name__ == '__main__':
     # training data
     for index, row in id_train.iterrows():
         train_id = str(row['MRI HEME #'])
-        if train_id not in ['250', '230', '316', '425', '210', '161', '185', '410']:
+        if train_id not in skip_ids.dwi_less_slice+skip_ids.flair_noise+skip_ids.no_flair:
             shutil.copy(os.path.join(source_path, 'n4_dwi', train_id+'_DWI.nii'), training_dwi_path)
             shutil.copy(os.path.join(source_path, 'n4_dwi_L10', train_id + '_DWI_RL10.nii'), training_dwi_path)
             shutil.copy(os.path.join(source_path, 'n4_dwi_R10', train_id + '_DWI_RR10.nii'), training_dwi_path)
@@ -58,7 +60,7 @@ if __name__ == '__main__':
     # testinf data
     for index, row in id_test.iterrows():
         test_id = str(row['MRI HEME #'])
-        if test_id not in ['250', '230', '316', '425', '210', '161', '185', '410']:
+        if test_id not in skip_ids.dwi_less_slice+skip_ids.flair_noise+skip_ids.no_flair:
             shutil.copy(os.path.join(source_path, 'n4_dwi', test_id + '_DWI.nii'), testing_dwi_path)
             shutil.copy(os.path.join(source_path, 'n4_flair', test_id + '_FLAIR.nii'), testing_flair_path)
 
