@@ -117,13 +117,15 @@ def write_ct_image_label_to_file(config, img_paths, data_storage, label_storage)
     return data_storage, label_storage
 
 
-def write_mr_image_label_to_file(config, training_test, sequence_paths, data_storage, label_storage):
+def write_mr_image_label_to_file(config, training_or_testing, sequence_paths, data_storage, label_storage):
     # At this monent, we sure that sample size of each sequence are consist
     # But I still want to go one by one to make sure the order of samples and label is correct
     # it is very inefficient way, but... be careful
     ids_labels = get_ids_labels(config['which_machine'])
-    mri_path = os.path.join(current_path, 'mri', training_test)
-    img_paths_for_loop = glob.glob(os.path.join(sequence_paths[0], '*.nii'))
+    mri_path = os.path.join(current_path, 'mri', training_or_testing)
+    temp_sequence = config['all_sequences'][0].upper()
+    img_paths_for_loop = glob.glob(os.path.join(sequence_paths[0], '*_'+temp_sequence+'.nii'))
+    id_list = []
     for img_path_for_loop in img_paths_for_loop:
         sid = get_subject_id_from_path(img_path_for_loop)
         mr_img_list = []
@@ -135,6 +137,26 @@ def write_mr_image_label_to_file(config, training_test, sequence_paths, data_sto
             mr_img_list.append(img_data)
         data_storage.append(np.asarray(mr_img_list[:config['n_channels']])[np.newaxis])
         true_label = get_subject_label(sid, ids_labels)
+        label_storage.append(true_label)
+        id_list.append(sid)
+    if training_or_testing == 'training':
+        data_storage, label_storage = add_augumentation(config, id_list, data_storage, label_storage)
+    return data_storage, label_storage
+
+
+def add_augumentation(config, id_list, data_storage, label_storage):
+    mri_path = os.path.join(current_path, 'mri', 'training')
+    ids_labels = get_ids_labels(config['which_machine'])
+    for id in id_list:
+        mr_img_list = []
+        for s in config['all_sequences']:
+            sq_path = os.path.join(mri_path, 'n4_' + s)
+            read_path = os.path.join(sq_path, id + '_' + s.upper() + '_F.nii')
+            img = sitk.ReadImage(read_path)
+            img_data = sitk.GetArrayFromImage(img)
+            mr_img_list.append(img_data)
+        data_storage.append(np.asarray(mr_img_list[:config['n_channels']])[np.newaxis])
+        true_label = get_subject_label(id, ids_labels)
         label_storage.append(true_label)
     return data_storage, label_storage
 
