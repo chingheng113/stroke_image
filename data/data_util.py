@@ -148,10 +148,55 @@ def add_augumentation(config, id_list, data_storage, label_storage):
     mri_path = os.path.join(current_path, 'mri', 'training')
     ids_labels = get_ids_labels(config['which_machine'])
     for id in id_list:
+        # Flip ===
         mr_img_list = []
         for s in config['all_sequences']:
             sq_path = os.path.join(mri_path, 'n4_' + s)
             read_path = os.path.join(sq_path, id + '_' + s.upper() + '_F.nii')
+            img = sitk.ReadImage(read_path)
+            img_data = sitk.GetArrayFromImage(img)
+            mr_img_list.append(img_data)
+        data_storage.append(np.asarray(mr_img_list[:config['n_channels']])[np.newaxis])
+        true_label = get_subject_label(id, ids_labels)
+        label_storage.append(true_label)
+        # Rotate right 10 ===
+        mr_img_list = []
+        for s in config['all_sequences']:
+            sq_path = os.path.join(mri_path, 'n4_' + s)
+            read_path = os.path.join(sq_path, id + '_' + s.upper() + '_RR10.nii')
+            img = sitk.ReadImage(read_path)
+            img_data = sitk.GetArrayFromImage(img)
+            mr_img_list.append(img_data)
+        data_storage.append(np.asarray(mr_img_list[:config['n_channels']])[np.newaxis])
+        true_label = get_subject_label(id, ids_labels)
+        label_storage.append(true_label)
+        # Rotate left 10 ===
+        mr_img_list = []
+        for s in config['all_sequences']:
+            sq_path = os.path.join(mri_path, 'n4_' + s)
+            read_path = os.path.join(sq_path, id + '_' + s.upper() + '_RL10.nii')
+            img = sitk.ReadImage(read_path)
+            img_data = sitk.GetArrayFromImage(img)
+            mr_img_list.append(img_data)
+        data_storage.append(np.asarray(mr_img_list[:config['n_channels']])[np.newaxis])
+        true_label = get_subject_label(id, ids_labels)
+        label_storage.append(true_label)
+        # Flip, Rotate right 10 ===
+        mr_img_list = []
+        for s in config['all_sequences']:
+            sq_path = os.path.join(mri_path, 'n4_' + s)
+            read_path = os.path.join(sq_path, id + '_' + s.upper() + '_F_RR10.nii')
+            img = sitk.ReadImage(read_path)
+            img_data = sitk.GetArrayFromImage(img)
+            mr_img_list.append(img_data)
+        data_storage.append(np.asarray(mr_img_list[:config['n_channels']])[np.newaxis])
+        true_label = get_subject_label(id, ids_labels)
+        label_storage.append(true_label)
+        # Flip, Rotate left 10 ===
+        mr_img_list = []
+        for s in config['all_sequences']:
+            sq_path = os.path.join(mri_path, 'n4_' + s)
+            read_path = os.path.join(sq_path, id + '_' + s.upper() + '_F_RL10.nii')
             img = sitk.ReadImage(read_path)
             img_data = sitk.GetArrayFromImage(img)
             mr_img_list.append(img_data)
