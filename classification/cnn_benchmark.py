@@ -17,8 +17,8 @@ else:
     config["all_sequences"] = ['dwi', 'flair']
 config['n_channels'] = len(config["all_sequences"])
 config['input_shape'] = tuple([config['n_channels']] + list(config['image_shape']))
-config['batch_size'] = 30
-config["n_epochs"] = 150
+config['batch_size'] = 56
+config["n_epochs"] = 300
 
 if __name__ == '__main__':
     read_training_file_path = data_util.write_data_to_file(config, 'training')
