@@ -1,6 +1,6 @@
 import pickle
 import matplotlib.pyplot as plt
-
+from keras.models import load_model
 
 def plot_training_acc(model_name):
     with open(model_name+'_trainHistory.pickle', 'rb') as f:
@@ -26,7 +26,16 @@ def plot_training_loss(model_name):
         plt.show()
 
 
+def load_model(model_name):
+    model = load_model(model_name+'.h5')
+    return model
+
+
+# def load_testing_data():
+    
+
+
 if __name__ == '__main__':
-    model_name = 'AlexNet'
+    model_name = 'simple_AlexNet'
     plot_training_acc(model_name)
     plot_training_loss(model_name)
