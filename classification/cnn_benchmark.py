@@ -47,7 +47,7 @@ if __name__ == '__main__':
                                   epochs=config["n_epochs"],
                                   validation_data=validation_generator,
                                   validation_steps=n_validation_steps,
-                                  callbacks=ReduceLROnPlateau(factor=0.5, patience=30, verbose=1),
+                                  callbacks=[ReduceLROnPlateau(factor=0.5, patience=30, verbose=1)],
                                   verbose=1
                                   )
     data_util.save_history(model.name, history)
