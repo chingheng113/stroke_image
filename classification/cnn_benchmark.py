@@ -3,6 +3,7 @@ sys.path.append(os.path.abspath(os.path.join('/data/linc9/stroke_image/')))
 from data import data_util
 from classification import generator, models
 from keras import backend
+from keras.callbacks import ReduceLROnPlateau
 import keras.optimizers
 
 backend.set_image_data_format('channels_first')
@@ -19,8 +20,8 @@ else:
     config["all_sequences"] = ['dwi', 'flair']
 config['n_channels'] = len(config["all_sequences"])
 config['input_shape'] = tuple([config['n_channels']] + list(config['image_shape']))
-config['batch_size'] = 48
-config["n_epochs"] = 30
+config['batch_size'] = 6
+config["n_epochs"] = 150
 
 if __name__ == '__main__':
     read_training_file_path = os.path.join('..', 'data', config['which_machine'], config['which_machine']+'_data_training.h5')
@@ -46,6 +47,7 @@ if __name__ == '__main__':
                                   epochs=config["n_epochs"],
                                   validation_data=validation_generator,
                                   validation_steps=n_validation_steps,
+                                  callbacks=ReduceLROnPlateau(factor=0.5, patience=30, verbose=1),
                                   verbose=1
                                   )
     data_util.save_history(model.name, history)
