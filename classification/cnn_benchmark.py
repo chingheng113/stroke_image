@@ -20,7 +20,7 @@ else:
 config['n_channels'] = len(config["all_sequences"])
 config['input_shape'] = tuple([config['n_channels']] + list(config['image_shape']))
 config['batch_size'] = 56
-config["n_epochs"] = 300
+config["n_epochs"] = 30
 
 if __name__ == '__main__':
     read_training_file_path = os.path.join('..', 'data', config['which_machine'], config['which_machine']+'_data_training.h5')
