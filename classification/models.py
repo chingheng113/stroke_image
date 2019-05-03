@@ -35,20 +35,23 @@ def get_AlexNet(config):
     flat_6 = Flatten()(maxp_5)
     den_6 = Dense(units=512)(flat_6)
     act_6 = Activation('sigmoid')(den_6)
-    drop_6 = Dropout(0.4)(act_6)
+    nor_6 = BatchNormalization()(act_6)
+    drop_6 = Dropout(0.4)(nor_6)
 
     den_7 = Dense(units=256)(drop_6)
     act_7 = Activation('sigmoid')(den_7)
-    drop_7 = Dropout(0.4)(act_7)
+    nor_7 = BatchNormalization()(act_7)
+    drop_7 = Dropout(0.4)(nor_7)
 
     den_8 = Dense(units=128)(drop_7)
     act_8 = Activation('sigmoid')(den_8)
-    drop_8 = Dropout(0.4)(act_8)
+    nor_8 = BatchNormalization()(act_8)
+    drop_8 = Dropout(0.4)(nor_8)
 
     output = Dense(units=config['n_classes'], activation='softmax')(drop_8)
     model = Model(inputs=input_lay, outputs=output, name='AlexNet')
 
-    opt = keras.optimizers.adam()
+    opt = keras.optimizers.adam(lr=0.00001)
     model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
 
     return model
