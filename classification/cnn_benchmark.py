@@ -6,6 +6,8 @@ from keras import backend
 import keras.optimizers
 
 backend.set_image_data_format('channels_first')
+backend.set_image_dim_ordering('th')
+
 config = dict()
 config['which_machine'] = 'mri' # Need to rewrite 'write_ct_image_label_to_file' for training and testing
 config['image_shape'] = (20, 256, 256) # CHANNEL, DEPTH, WIDTH, HEIGHT
