@@ -52,9 +52,9 @@ def load_testing_data():
 
 
 if __name__ == '__main__':
-    model_name = 'simple_AlexNet'
-    # plot_training_acc(model_name)
-    # plot_training_loss(model_name)
+    model_name = 'simple_VoxCNN'
+    plot_training_acc(model_name)
+    plot_training_loss(model_name)
     model = load_model(model_name+'.h5')
     X_data, y_data, y_data_o = load_testing_data()
     loss, acc = model.evaluate(X_data, y_data, verbose=0)
