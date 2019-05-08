@@ -9,6 +9,10 @@ import pickle
 current_path = os.path.dirname(__file__)
 
 
+def random_boolean():
+    return np.random.choice([True, False])
+
+
 def get_ids_labels(mc):
     df = pd.read_csv(os.path.join(current_path, 'HEME-ER details for Dr Fann.csv')).dropna()
     # id
@@ -150,16 +154,17 @@ def add_augmentation(config, id_list, data_storage, label_storage):
     augments = ['F', 'RR10', 'RL10', 'F_RR10', 'F_RL10']
     for id in id_list:
         for augment in augments:
-            mr_img_list = []
-            for s in config['all_sequences']:
-                sq_path = os.path.join(mri_path, 'n4_' + s)
-                read_path = os.path.join(sq_path, id + '_' + s.upper() + '_'+augment+'.nii')
-                img = sitk.ReadImage(read_path)
-                img_data = sitk.GetArrayFromImage(img)
-                mr_img_list.append(img_data)
-            data_storage.append(np.asarray(mr_img_list[:config['n_channels']])[np.newaxis])
-            true_label = get_subject_label(id, ids_labels)
-            label_storage.append(true_label)
+            if random_boolean():
+                mr_img_list = []
+                for s in config['all_sequences']:
+                    sq_path = os.path.join(mri_path, 'n4_' + s)
+                    read_path = os.path.join(sq_path, id + '_' + s.upper() + '_'+augment+'.nii')
+                    img = sitk.ReadImage(read_path)
+                    img_data = sitk.GetArrayFromImage(img)
+                    mr_img_list.append(img_data)
+                data_storage.append(np.asarray(mr_img_list[:config['n_channels']])[np.newaxis])
+                true_label = get_subject_label(id, ids_labels)
+                label_storage.append(true_label)
     return data_storage, label_storage
 
 
