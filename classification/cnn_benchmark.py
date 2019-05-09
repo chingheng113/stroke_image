@@ -20,8 +20,8 @@ else:
     config["all_sequences"] = ['dwi', 'flair']
 config['n_channels'] = len(config["all_sequences"])
 config['input_shape'] = tuple([config['n_channels']] + list(config['image_shape']))
-config['batch_size'] = 6
-config["n_epochs"] = 150
+config['batch_size'] = 10
+config["n_epochs"] = 50
 
 if __name__ == '__main__':
     read_training_file_path = os.path.join('..', 'data', config['which_machine'], config['which_machine']+'_data_training.h5')
