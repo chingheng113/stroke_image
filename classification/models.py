@@ -25,7 +25,9 @@ def get_simple_VoxCNN(config):
     drop_5 = Dropout(0.4)(nor_5)
     den_6 = Dense(units=64)(drop_5)
     act_6 = Activation('relu')(den_6)
-    output = Dense(units=config['n_classes'], activation='softmax')(act_6)
+    nor_6 = BatchNormalization()(act_6)
+    drop_6 = Dropout(0.4)(nor_6)
+    output = Dense(units=config['n_classes'], activation='softmax')(drop_6)
     model = Model(inputs=input_lay, outputs=output, name='simple_VoxCNN')
 
     opt = keras.optimizers.adam(lr=0.00001)
