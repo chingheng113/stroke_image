@@ -51,16 +51,26 @@ if __name__ == '__main__':
             shutil.copy(os.path.join(source_path, 'n4_dwi_flip', train_id + '_DWI_F.nii'), training_dwi_path)
             shutil.copy(os.path.join(source_path, 'n4_dwi_flip_L10', train_id + '_DWI_F_RL10.nii'), training_dwi_path)
             shutil.copy(os.path.join(source_path, 'n4_dwi_flip_R10', train_id + '_DWI_F_RR10.nii'), training_dwi_path)
+            shutil.copy(os.path.join(source_path, 'n4_dwi_crop', train_id + '_DWI_c.nii'), training_dwi_path)
+            shutil.copy(os.path.join(source_path, 'n4_dwi_crop_Flip', train_id + '_DWI_c_F.nii'), training_dwi_path)
+            shutil.copy(os.path.join(source_path, 'n4_dwi_crop_L90', train_id + '_DWI_c_RL90.nii'), training_dwi_path)
+            shutil.copy(os.path.join(source_path, 'n4_dwi_crop_R90', train_id + '_DWI_c_RR90.nii'), training_dwi_path)
             shutil.copy(os.path.join(source_path, 'n4_flair', train_id + '_FLAIR.nii'), training_flair_path)
             shutil.copy(os.path.join(source_path, 'n4_flair_L10', train_id + '_FLAIR_RL10.nii'), training_flair_path)
             shutil.copy(os.path.join(source_path, 'n4_flair_R10', train_id + '_FLAIR_RR10.nii'), training_flair_path)
             shutil.copy(os.path.join(source_path, 'n4_flair_flip', train_id + '_FLAIR_F.nii'), training_flair_path)
             shutil.copy(os.path.join(source_path, 'n4_flair_flip_L10', train_id + '_FLAIR_F_RL10.nii'), training_flair_path)
             shutil.copy(os.path.join(source_path, 'n4_flair_flip_R10', train_id + '_FLAIR_F_RR10.nii'), training_flair_path)
+            shutil.copy(os.path.join(source_path, 'n4_flair_crop', train_id + '_flair_c.nii'), training_dwi_path)
+            shutil.copy(os.path.join(source_path, 'n4_flair_crop_Flip', train_id + '_flair_c_F.nii'), training_dwi_path)
+            shutil.copy(os.path.join(source_path, 'n4_flair_crop_L90', train_id + '_flair_c_RL90.nii'), training_dwi_path)
+            shutil.copy(os.path.join(source_path, 'n4_flair_crop_R90', train_id + '_flair_c_RR90.nii'), training_dwi_path)
+
     # testinf data
     for index, row in id_test.iterrows():
         test_id = str(row['MRI HEME #'])
         if test_id not in skip_ids.dwi_less_slice+skip_ids.flair_noise+skip_ids.no_flair:
             shutil.copy(os.path.join(source_path, 'n4_dwi', test_id + '_DWI.nii'), testing_dwi_path)
             shutil.copy(os.path.join(source_path, 'n4_flair', test_id + '_FLAIR.nii'), testing_flair_path)
+    print('Moving files done')
 

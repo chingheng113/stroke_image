@@ -151,7 +151,7 @@ def write_mr_image_label_to_file(config, training_or_testing, sequence_paths, da
 def add_augmentation(config, id_list, data_storage, label_storage):
     mri_path = os.path.join(current_path, 'mri', 'training')
     ids_labels = get_ids_labels(config['which_machine'])
-    augments = ['F', 'RR10', 'RL10', 'F_RR10', 'F_RL10']
+    augments = ['F', 'RR10', 'RL10', 'F_RR10', 'F_RL10', 'c', 'c_F', 'c_RL90', 'c_RR90']
     for id in id_list:
         for augment in augments:
             if random_boolean():
