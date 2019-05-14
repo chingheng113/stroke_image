@@ -154,7 +154,8 @@ def add_augmentation(config, id_list, data_storage, label_storage):
     augments = ['F', 'RR10', 'RL10', 'F_RR10', 'F_RL10', 'c', 'c_F', 'c_RL90', 'c_RR90']
     for id in id_list:
         for augment in augments:
-            if random_boolean():
+            # if random_boolean():
+            if True:
                 mr_img_list = []
                 for s in config['all_sequences']:
                     sq_path = os.path.join(mri_path, 'n4_' + s)
