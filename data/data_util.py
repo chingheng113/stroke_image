@@ -152,11 +152,11 @@ def add_augmentation(config, id_list, data_storage, label_storage):
     mri_path = os.path.join(current_path, 'mri', 'training')
     ids_labels = get_ids_labels(config['which_machine'])
     for id in id_list:
-        for augment in config['all_sequences']:
+        for augment in config['augments']:
             # if random_boolean():
             if True:
                 mr_img_list = []
-                for s in config['augments']:
+                for s in config['all_sequences']:
                     sq_path = os.path.join(mri_path, 'n4_' + s)
                     read_path = os.path.join(sq_path, id + '_' + s.upper() + '_'+augment+'.nii')
                     img = sitk.ReadImage(read_path)
