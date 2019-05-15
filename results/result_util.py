@@ -5,6 +5,7 @@ import keras.optimizers
 import numpy as np
 from data import data_util
 from sklearn.metrics import classification_report, confusion_matrix
+import os
 
 def labelize(y_arr):
     y_label = []
@@ -44,7 +45,10 @@ def load_testing_data():
     config["all_sequences"] = ['dwi', 'flair']
     config['n_channels'] = len(config["all_sequences"])
     config['image_shape'] = (20, 256, 256)
-    read_test_file_path = data_util.write_data_to_file(config, 'testing')
+
+    read_test_file_path = os.path.join('..', 'data', 'mri', 'mri_data_testing.h5')
+
+
     X_data = data_util.open_data_file(read_test_file_path).root.data[:]
     y_data_o = data_util.open_data_file(read_test_file_path).root.label[:]
     y_data = keras.utils.to_categorical(y_data_o, num_classes=config['n_classes'])
@@ -62,3 +66,4 @@ if __name__ == '__main__':
     predict_labels = labelize(predict_prob)
     cm = confusion_matrix(y_data_o, predict_labels)
     print(cm)
+    print(acc)

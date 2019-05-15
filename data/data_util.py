@@ -151,13 +151,12 @@ def write_mr_image_label_to_file(config, training_or_testing, sequence_paths, da
 def add_augmentation(config, id_list, data_storage, label_storage):
     mri_path = os.path.join(current_path, 'mri', 'training')
     ids_labels = get_ids_labels(config['which_machine'])
-    augments = ['F', 'RR10', 'RL10', 'F_RR10', 'F_RL10', 'c', 'c_F', 'c_RL90', 'c_RR90']
     for id in id_list:
-        for augment in augments:
+        for augment in config['all_sequences']:
             # if random_boolean():
             if True:
                 mr_img_list = []
-                for s in config['all_sequences']:
+                for s in config['augments']:
                     sq_path = os.path.join(mri_path, 'n4_' + s)
                     read_path = os.path.join(sq_path, id + '_' + s.upper() + '_'+augment+'.nii')
                     img = sitk.ReadImage(read_path)
