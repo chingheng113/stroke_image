@@ -59,7 +59,7 @@ def data_generator(data_file, index_list, config):
         x_list = list()
         y_list = list()
         index_list = copy.copy(orig_index_list)
-        shuffle(index_list)
+        # shuffle(index_list)
         while len(index_list) > 0:
             index = index_list.pop()
             add_data(x_list, y_list, data_file, index, config)
