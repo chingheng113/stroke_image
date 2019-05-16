@@ -202,7 +202,7 @@ def write_data_to_file(config, training_or_testing):
         sequence_paths = get_mr_sequence_paths(config, training_or_testing)
         hdf5_file, data_storage, label_storage = create_mr_data_file(config, sequence_paths, file_path)
         write_mr_image_label_to_file(config, training_or_testing, sequence_paths, data_storage, label_storage)
-    normalize_data_storage(data_storage)
+    # normalize_data_storage(data_storage)
     hdf5_file.close()
     return file_path
 
