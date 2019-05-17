@@ -30,7 +30,7 @@ def get_simple_VoxCNN(config):
     output = Dense(units=config['n_classes'], activation='softmax')(drop_6)
     model = Model(inputs=input_lay, outputs=output, name='simple_VoxCNN')
 
-    opt = keras.optimizers.adam(lr=0.0000001)
+    opt = keras.optimizers.adam(lr=0.00001)
     model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
 
     return model
