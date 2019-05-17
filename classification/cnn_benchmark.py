@@ -17,8 +17,8 @@ if config['which_machine'] == 'ct':
     config['all_sequences'] = ['ct']
 else:
     # MRI
-    # config["all_sequences"] = ['dwi', 'flair']
-    config["all_sequences"] = ['dwi']
+    config["all_sequences"] = ['dwi', 'flair']
+    # config["all_sequences"] = ['dwi']
 config['n_channels'] = len(config["all_sequences"])
 config['input_shape'] = tuple([config['n_channels']] + list(config['image_shape']))
 config['batch_size'] = 10

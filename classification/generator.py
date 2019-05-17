@@ -5,6 +5,7 @@ import pickle
 import numpy as np
 from random import shuffle
 import keras.optimizers
+import nibabel as nib
 
 # *************************************************************************
 # make sure we are using pytables (conda install pytables), not tables !!!
@@ -41,6 +42,9 @@ def get_validation_split(data_file, validation_size):
 
 def add_data(x_list, y_list, data_file, index, config):
     X_data = data_file.root.data[index]
+    id = data_file.root.id[index]
+    # new_image = nib.Nifti1Image(np.transpose(X_data), affine=np.eye(4))
+    # nib.save(new_image, 'watch.nii')
     y_data_o = data_file.root.label[index]
     y_data = keras.utils.to_categorical(y_data_o, num_classes=config['n_classes'])
     x_list.append(X_data)
@@ -59,7 +63,7 @@ def data_generator(data_file, index_list, config):
         x_list = list()
         y_list = list()
         index_list = copy.copy(orig_index_list)
-        shuffle(index_list)
+        # shuffle(index_list)
         while len(index_list) > 0:
             index = index_list.pop()
             add_data(x_list, y_list, data_file, index, config)
