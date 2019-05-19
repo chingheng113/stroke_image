@@ -3,7 +3,7 @@ sys.path.append(os.path.abspath(os.path.join('/data/linc9/stroke_image/')))
 from data import data_util
 from classification import generator, models
 from keras import backend
-from keras.callbacks import ReduceLROnPlateau
+from keras.callbacks import ReduceLROnPlateau, EarlyStopping
 import keras.optimizers
 
 backend.set_image_data_format('channels_first')
@@ -22,11 +22,11 @@ else:
 config['n_channels'] = len(config["all_sequences"])
 config['input_shape'] = tuple([config['n_channels']] + list(config['image_shape']))
 config['batch_size'] = 10
-config['n_epochs'] = 150
-config['augments'] = ['F', 'RR10', 'RL10', 'F_RR10', 'F_RL10', 'c', 'c_F', 'c_RL90', 'c_RR90'] #7397
+config['n_epochs'] = 50
+# config['augments'] = ['F', 'RR10', 'RL10', 'F_RR10', 'F_RL10', 'c', 'c_F', 'c_RL90', 'c_RR90'] #7397
 # config['augments'] = ['F', 'RR10', 'RL10', 'F_RR10', 'F_RL10'] #4383
-# config['augments'] = ['F', 'RR10', 'RL10', 'F_RR10', 'F_RL10', 'c', 'c_F', 'c_RL90', 'c_RR90', 'RL90', 'RR90',
-#                       'c_F_RR90', 'c_F_RL90']
+config['augments'] = ['F', 'RR10', 'RL10', 'F_RR10', 'F_RL10', 'c', 'c_F', 'c_RL90', 'c_RR90', 'RL90', 'RR90',
+                      'c_F_RR90', 'c_F_RL90']
 # config['augments'] = []
 
 if __name__ == '__main__':
@@ -53,7 +53,8 @@ if __name__ == '__main__':
                                   epochs=config["n_epochs"],
                                   validation_data=validation_generator,
                                   validation_steps=n_validation_steps,
-                                  callbacks=[ReduceLROnPlateau(factor=0.5, patience=30, verbose=1)],
+                                  callbacks=[ReduceLROnPlateau(factor=0.5, patience=5, verbose=1),
+                                             EarlyStopping(verbose=1, patience=20)],
                                   verbose=1
                                   )
     data_util.save_history(model.name, history)
