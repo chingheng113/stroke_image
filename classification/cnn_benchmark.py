@@ -23,11 +23,11 @@ config['n_channels'] = len(config["all_sequences"])
 config['input_shape'] = tuple([config['n_channels']] + list(config['image_shape']))
 config['batch_size'] = 10
 config['n_epochs'] = 150
-# config['augments'] = ['F', 'RR10', 'RL10', 'F_RR10', 'F_RL10', 'c', 'c_F', 'c_RL90', 'c_RR90'] #7397
+config['augments'] = ['F', 'RR10', 'RL10', 'F_RR10', 'F_RL10', 'c', 'c_F', 'c_RL90', 'c_RR90'] #7397
 # config['augments'] = ['F', 'RR10', 'RL10', 'F_RR10', 'F_RL10'] #4383
 # config['augments'] = ['F', 'RR10', 'RL10', 'F_RR10', 'F_RL10', 'c', 'c_F', 'c_RL90', 'c_RR90', 'RL90', 'RR90',
 #                       'c_F_RR90', 'c_F_RL90']
-config['augments'] = []
+# config['augments'] = []
 
 if __name__ == '__main__':
     read_training_file_path = os.path.join('..', 'data', config['which_machine'], config['which_machine']+'_data_training.h5')
