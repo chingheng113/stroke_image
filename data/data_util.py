@@ -5,6 +5,7 @@ import os
 import numpy as np
 import tables
 import pickle
+from dltk.io.preprocessing import normalise_zero_one
 
 current_path = os.path.dirname(__file__)
 
@@ -140,7 +141,7 @@ def write_mr_image_label_to_file(config, training_or_testing, sequence_paths, da
             read_path = os.path.join(sq_path, sid+'_'+s.upper()+'.nii')
             img = sitk.ReadImage(read_path)
             img_data = sitk.GetArrayFromImage(img)
-            img_data = normalize_data(img_data, img_data.mean(axis=(1, 2, 3)), img_data.std(axis=(1, 2, 3)))
+            img_data = normalise_zero_one(img_data)
             mr_img_list.append(img_data)
         data_storage.append(np.asarray(mr_img_list[:config['n_channels']])[np.newaxis])
         true_label = get_subject_label(sid, ids_labels)
@@ -165,7 +166,7 @@ def add_augmentation(config, id_list, data_storage, label_storage, id_storage):
                     read_path = os.path.join(sq_path, id + '_' + s.upper() + '_'+augment+'.nii')
                     img = sitk.ReadImage(read_path)
                     img_data = sitk.GetArrayFromImage(img)
-                    img_data = normalize_data(img_data, img_data.mean(axis=(1, 2, 3)), img_data.std(axis=(1, 2, 3)))
+                    img_data = normalise_zero_one(img_data)
                     mr_img_list.append(img_data)
                 data_storage.append(np.asarray(mr_img_list[:config['n_channels']])[np.newaxis])
                 true_label = get_subject_label(id, ids_labels)
