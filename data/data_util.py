@@ -181,20 +181,25 @@ def normalize_data(data, mean, std):
     return data
 
 
-train_mean = 0.
-train_std = 0.
-def normalize_data_storage(data_storage, training_or_testing):
-    if training_or_testing == 'training':
-        means = list()
-        stds = list()
-        for index in range(data_storage.shape[0]):
-            data = data_storage[index]
-            means.append(data.mean(axis=(1, 2, 3)))
-            stds.append(data.std(axis=(1, 2, 3)))
-        train_mean = np.asarray(means).mean(axis=0)
-        train_std = np.asarray(stds).mean(axis=0)
+def normalize_training_data_storage(data_storage, config):
+    means = list()
+    stds = list()
+    for index in range(data_storage.shape[0]):
+        data = data_storage[index]
+        means.append(data.mean(axis=(1, 2, 3)))
+        stds.append(data.std(axis=(1, 2, 3)))
+    train_mean = np.asarray(means).mean(axis=0)
+    train_std = np.asarray(stds).mean(axis=0)
+    config['train_mean'] = train_mean
+    config['train_std'] = train_std
     for index in range(data_storage.shape[0]):
         data_storage[index] = normalize_data(data_storage[index], train_mean, train_std)
+    return data_storage, config
+
+
+def normalize_testing_data_storage(data_storage, config):
+    for index in range(data_storage.shape[0]):
+        data_storage[index] = normalize_data(data_storage[index], config['train_mean'], config['train_std'])
     return data_storage
 
 
@@ -212,7 +217,10 @@ def write_data_to_file(config, training_or_testing):
         sequence_paths = get_mr_sequence_paths(config, training_or_testing)
         hdf5_file, data_storage, label_storage, id_storage = create_mr_data_file(config, sequence_paths, file_path)
         write_mr_image_label_to_file(config, training_or_testing, sequence_paths, data_storage, label_storage, id_storage)
-    normalize_data_storage(data_storage, training_or_testing)
+    if training_or_testing == 'training':
+        normalize_training_data_storage(data_storage, config)
+    else:
+        normalize_testing_data_storage(data_storage, config)
     hdf5_file.close()
     return file_path
 
