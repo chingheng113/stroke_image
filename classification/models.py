@@ -21,16 +21,16 @@ def get_simple_VoxCNN(config):
     flat = Flatten()(maxp_4)
     den_5 = Dense(units=128)(flat)
     act_5 = Activation('relu')(den_5)
-    nor_5 = BatchNormalization()(act_5)
-    drop_5 = Dropout(0.4)(nor_5)
+    # nor_5 = BatchNormalization()(act_5)
+    drop_5 = Dropout(0.4)(act_5)
     den_6 = Dense(units=64)(drop_5)
     act_6 = Activation('relu')(den_6)
-    nor_6 = BatchNormalization()(act_6)
-    drop_6 = Dropout(0.4)(nor_6)
+    # nor_6 = BatchNormalization()(act_6)
+    drop_6 = Dropout(0.4)(act_6)
     output = Dense(units=config['n_classes'], activation='softmax')(drop_6)
     model = Model(inputs=input_lay, outputs=output, name='simple_VoxCNN')
 
-    opt = keras.optimizers.adam(lr=0.00001)
+    opt = keras.optimizers.adam()
     model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
 
     return model
