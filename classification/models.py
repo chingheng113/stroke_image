@@ -31,7 +31,7 @@ def get_simple_VoxCNN(config):
     model = Model(inputs=input_lay, outputs=output, name='simple_VoxCNN')
 
     opt = keras.optimizers.adam(lr=1e-5)
-    model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
+    model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
 
     return model
 

@@ -35,6 +35,9 @@ if __name__ == '__main__':
                    'Other Diagnosis': 0
                    }
     df = pd.read_csv(os.path.join(current_path, 'HEME-ER details for Dr Fann.csv')).dropna()
+    #
+    # df = df[df['Diagnosis Classification'].isin(['Ischemic Stroke', 'Other Diagnosis'])]
+    #
     ids = df[['MRI HEME #']].astype(int)
     labels = df[['Diagnosis Classification']]
     labels.replace(replace_dic, inplace=True)
