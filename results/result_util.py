@@ -22,7 +22,7 @@ def plot_training_acc(model_name):
         plt.title('model accuracy')
         plt.ylabel('accuracy')
         plt.xlabel('epoch')
-        plt.legend(['train', 'test'], loc='upper left')
+        plt.legend(['training', 'validation'], loc='upper left')
         plt.show()
 
 
@@ -34,7 +34,7 @@ def plot_training_loss(model_name):
         plt.title('model loss')
         plt.ylabel('loss')
         plt.xlabel('epoch')
-        plt.legend(['train', 'test'], loc='upper left')
+        plt.legend(['training', 'validation'], loc='upper left')
         plt.show()
 
 
@@ -48,7 +48,7 @@ def load_testing_data():
 
     read_test_file_path = os.path.join('..', 'data', 'mri', 'mri_data_testing.h5')
 
-
+    id_data = data_util.open_data_file(read_test_file_path).root.id[:]
     X_data = data_util.open_data_file(read_test_file_path).root.data[:]
     y_data_o = data_util.open_data_file(read_test_file_path).root.label[:]
     y_data = keras.utils.to_categorical(y_data_o, num_classes=config['n_classes'])
