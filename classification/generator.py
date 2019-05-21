@@ -21,34 +21,34 @@ def pickle_dump(item, out_file):
         pickle.dump(item, opened_file)
 
 
-# def split_list(input_list, validation_size=0.3, shuffle_list=True):
-#     split = 1. - validation_size
-#     if shuffle_list:
-#         shuffle(input_list)
-#     n_training = int(len(input_list) * split)
-#     training = input_list[:n_training]
-#     testing = input_list[n_training:]
-#     return training, testing
-#
-#
-# def get_validation_split(data_file, validation_size):
-#     print("Creating validation split...")
-#     nb_samples = data_file.root.data.shape[0]
-#     sample_list = list(range(nb_samples))
-#     training_list, validation_list = split_list(sample_list, validation_size, True)
-#     # pickle_dump(training_list, 'training_ids.pkl')
-#     # pickle_dump(validation_list, 'testing_ids.pkl')
-#     return training_list, validation_list
+def split_list(input_list, validation_size=0.3, shuffle_list=True):
+    split = 1. - validation_size
+    if shuffle_list:
+        shuffle(input_list)
+    n_training = int(len(input_list) * split)
+    training = input_list[:n_training]
+    testing = input_list[n_training:]
+    return training, testing
 
 
 def get_validation_split(data_file, validation_size):
     print("Creating validation split...")
-    labels = data_file.root.label[:]
-    ids = data_file.root.id[:]
-    id_train, id_val, label_train, label_val = train_test_split(ids, labels, test_size=validation_size)
-    training_list = id_train.index
-    validation_list = id_val.index
+    nb_samples = data_file.root.data.shape[0]
+    sample_list = list(range(nb_samples))
+    training_list, validation_list = split_list(sample_list, validation_size, True)
+    # pickle_dump(training_list, 'training_ids.pkl')
+    # pickle_dump(validation_list, 'testing_ids.pkl')
     return training_list, validation_list
+
+
+# def get_validation_split(data_file, validation_size):
+#     print("Creating validation split...")
+#     labels = data_file.root.label[:]
+#     ids = data_file.root.id[:]
+#     id_train, id_val, label_train, label_val = train_test_split(ids, labels, test_size=validation_size)
+#     training_list = id_train.index
+#     validation_list = id_val.index
+#     return training_list, validation_list
 
 
 def add_data(x_list, y_list, data_file, index, config):
