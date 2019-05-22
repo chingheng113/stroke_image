@@ -21,10 +21,10 @@ def get_VoxCNN(config):
     model.add(Convolution3D(32, (3, 3, 3), activation='relu', padding='same'))
     model.add(MaxPooling3D(pool_size=(2, 2, 2)))
     # 4th Volumetric Convolutional block
-    model.add(Convolution3D(64, (3, 3, 3), activation='relu', padding='same'))
-    model.add(Convolution3D(64, (3, 3, 3), activation='relu', padding='same'))
-    model.add(Convolution3D(64, (3, 3, 3), activation='relu', padding='same'))
-    model.add(MaxPooling3D(pool_size=(2, 2, 2)))
+    # model.add(Convolution3D(64, (3, 3, 3), activation='relu', padding='same'))
+    # model.add(Convolution3D(64, (3, 3, 3), activation='relu', padding='same'))
+    # model.add(Convolution3D(64, (3, 3, 3), activation='relu', padding='same'))
+    # model.add(MaxPooling3D(pool_size=(2, 2, 2)))
     model.add(Flatten())
     # 1th Deconvolutional layer with batchnorm and dropout for regularization
     model.add(Dense(128, activation='relu'))
@@ -36,7 +36,7 @@ def get_VoxCNN(config):
     # model.add(Dropout(0.7))
     # Output with softmax nonlinearity for classification
     model.add(Dense(2, activation='softmax'))
-    opt = keras.optimizers.adam(lr=1e-5)
+    opt = keras.optimizers.adam(lr=27e-6)
     model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
     return model
 
