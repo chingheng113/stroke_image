@@ -1,12 +1,48 @@
 from keras.engine import Model
-from keras.layers import Dense, Conv3D, MaxPooling3D, Flatten, Input, Activation, BatchNormalization, Dropout
+from keras.models import Sequential
+from keras.layers import Dense, Conv3D, MaxPooling3D, Flatten, Input, Activation, BatchNormalization, Dropout, Convolution3D
 import keras.optimizers
 from keras.regularizers import l2
 
+
+def get_VoxCNN(config):
+    model = Sequential()
+    # 1st Volumetric Convolutional block
+    model.add(Convolution3D(8, (3, 3, 3), activation='relu', padding='same', input_shape=config['input_shape']))
+    model.add(Convolution3D(8, (3, 3, 3), activation='relu', padding='same'))
+    model.add(MaxPooling3D(pool_size=(2, 2, 2)))
+    # 2nd Volumetric Convolutional block
+    model.add(Convolution3D(16, (3, 3, 3), activation='relu', padding='same'))
+    model.add(Convolution3D(16, (3, 3, 3), activation='relu', padding='same'))
+    model.add(MaxPooling3D(pool_size=(2, 2, 2)))
+    # 3rd Volumetric Convolutional block
+    model.add(Convolution3D(32, (3, 3, 3), activation='relu', padding='same'))
+    model.add(Convolution3D(32, (3, 3, 3), activation='relu', padding='same'))
+    model.add(Convolution3D(32, (3, 3, 3), activation='relu', padding='same'))
+    model.add(MaxPooling3D(pool_size=(2, 2, 2)))
+    # 4th Volumetric Convolutional block
+    model.add(Convolution3D(64, (3, 3, 3), activation='relu', padding='same'))
+    model.add(Convolution3D(64, (3, 3, 3), activation='relu', padding='same'))
+    model.add(Convolution3D(64, (3, 3, 3), activation='relu', padding='same'))
+    model.add(MaxPooling3D(pool_size=(2, 2, 2)))
+    model.add(Flatten())
+    # 1th Deconvolutional layer with batchnorm and dropout for regularization
+    model.add(Dense(128, activation='relu'))
+    model.add(BatchNormalization())
+    model.add(Dropout(0.7))
+    # 2th Deconvolutional layer
+    model.add(Dense(64, activation='relu'))
+    # model.add(BatchNormalization())
+    # model.add(Dropout(0.7))
+    # Output with softmax nonlinearity for classification
+    model.add(Dense(2, activation='softmax'))
+    opt = keras.optimizers.adam(lr=1e-5)
+    model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
+    return model
+
+
 def get_simple_VoxCNN(config):
     # VoxCNN
-    # con dimension = floor(((n-f+2p)/s)+1)
-    # pooling dimension  = floor(((n-f)/s)+1)
     input_lay = Input(shape=config['input_shape'])
     conv_1 = Conv3D(filters=8, kernel_size=(3, 3, 3), padding='same', kernel_regularizer=l2(0.005))(input_lay)
     act_1 = Activation('relu')(conv_1)
@@ -29,10 +65,8 @@ def get_simple_VoxCNN(config):
     drop_6 = Dropout(0.5)(act_6)
     output = Dense(units=config['n_classes'], activation='softmax')(drop_6)
     model = Model(inputs=input_lay, outputs=output, name='simple_VoxCNN')
-
     opt = keras.optimizers.adam(lr=1e-5)
     model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
-
     return model
 
 
