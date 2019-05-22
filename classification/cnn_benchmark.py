@@ -16,7 +16,7 @@ config['n_classes'] = 2
 if config['which_machine'] == 'ct':
     config['all_sequences'] = ['ct']
 else:
-    config["all_sequences"] = ['dwi'] #, 'flair'
+    config["all_sequences"] = ['dwi', 'flair'] #
 config['n_channels'] = len(config["all_sequences"])
 config['input_shape'] = tuple([config['n_channels']] + list(config['image_shape']))
 config['batch_size'] = 8
@@ -44,7 +44,7 @@ if __name__ == '__main__':
 
     # Training
     train_generator, validation_generator, n_train_steps, n_validation_steps = generator.get_training_and_validation_generators(training_data_file, config)
-    model = models.get_VoxCNN(config)
+    model = models.get_simple_VoxCNN(config)
     print(model.summary())
     history = model.fit_generator(generator=train_generator,
                                   steps_per_epoch=n_train_steps,
