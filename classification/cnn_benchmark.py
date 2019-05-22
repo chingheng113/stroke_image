@@ -20,7 +20,7 @@ else:
 config['n_channels'] = len(config["all_sequences"])
 config['input_shape'] = tuple([config['n_channels']] + list(config['image_shape']))
 config['batch_size'] = 8
-config['n_epochs'] = 50
+config['n_epochs'] = 100
 # config['augments'] = ['F', 'RR10', 'RL10', 'F_RR10', 'F_RL10', 'c', 'c_F', 'c_RL90', 'c_RR90'] #7397
 # config['augments'] = ['F', 'RR10', 'RL10', 'F_RR10', 'F_RL10'] #4383
 # config['augments'] = ['F', 'RR10', 'RL10', 'F_RR10', 'F_RL10', 'c', 'c_F', 'c_RL90', 'c_RR90', 'RL90', 'RR90',
