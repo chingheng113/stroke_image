@@ -144,7 +144,7 @@ def write_mr_image_label_to_file(config, training_or_testing, sequence_paths, da
             img = sitk.ReadImage(read_path)
             img_data = sitk.GetArrayFromImage(img)
             img_data = normalise_zero_one(img_data)
-            result_util.save_array_to_nii(img_data, sid+'_'+s+'_f')
+            # result_util.save_array_to_nii(img_data, sid+'_'+s+'_f')
             mr_img_list.append(img_data)
         data_storage.append(np.asarray(mr_img_list[:config['n_channels']])[np.newaxis])
         true_label = get_subject_label(sid, ids_labels)
