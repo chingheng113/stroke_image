@@ -55,7 +55,8 @@ def get_validation_split(data_file, validation_size):
 def add_data(x_list, y_list, data_file, index, config):
     X_data = data_file.root.data[index]
     id = data_file.root.id[index]
-    result_util.save_array_to_nii(X_data, id+'_fs')
+    if id == 101:
+        result_util.save_array_to_nii(X_data, str(id)+'_fs')
     y_data_o = data_file.root.label[index]
     y_data = keras.utils.to_categorical(y_data_o, num_classes=config['n_classes'])
     x_list.append(X_data)
