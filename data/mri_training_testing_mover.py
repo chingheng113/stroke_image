@@ -36,7 +36,8 @@ if __name__ == '__main__':
                    }
     df = pd.read_csv(os.path.join(current_path, 'HEME-ER details for Dr Fann.csv')).dropna()
     #
-    skip_id_list = skip_ids.dwi_less_slice + skip_ids.flair_noise + skip_ids.no_flair
+    skip_id_list = skip_ids.dwi_less_slice + skip_ids.flair_noise + skip_ids.no_flair +skip_ids.dwi_noise
+    skip_id_list = list(dict.fromkeys(skip_id_list))
     df = df[~df['MRI HEME #'].isin(skip_id_list)]
     #
     # df = df[df['Diagnosis Classification'].isin(['Ischemic Stroke', 'Other Diagnosis'])]

@@ -5,8 +5,9 @@ import pickle
 import numpy as np
 from random import shuffle
 import keras.optimizers
+from results import result_util
 from sklearn.model_selection import train_test_split
-import nibabel as nib
+
 
 # *************************************************************************
 # make sure we are using pytables (conda install pytables), not tables !!!
@@ -54,8 +55,7 @@ def get_validation_split(data_file, validation_size):
 def add_data(x_list, y_list, data_file, index, config):
     X_data = data_file.root.data[index]
     id = data_file.root.id[index]
-    # new_image = nib.Nifti1Image(np.transpose(X_data), affine=np.eye(4))
-    # nib.save(new_image, 'watch.nii')
+    result_util.save_array_to_nii(X_data, id+'_fs')
     y_data_o = data_file.root.label[index]
     y_data = keras.utils.to_categorical(y_data_o, num_classes=config['n_classes'])
     x_list.append(X_data)

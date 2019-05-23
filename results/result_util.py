@@ -6,6 +6,8 @@ import numpy as np
 from data import data_util
 from sklearn.metrics import classification_report, confusion_matrix
 import os
+import nibabel as nib
+
 
 def labelize(y_arr):
     y_label = []
@@ -53,6 +55,11 @@ def load_testing_data():
     y_data_o = data_util.open_data_file(read_test_file_path).root.label[:]
     y_data = keras.utils.to_categorical(y_data_o, num_classes=config['n_classes'])
     return X_data, y_data, y_data_o
+
+
+def save_array_to_nii(X_data, fileName):
+    new_image = nib.Nifti1Image(np.transpose(X_data), affine=np.eye(4))
+    nib.save(new_image, fileName+'.nii')
 
 
 if __name__ == '__main__':

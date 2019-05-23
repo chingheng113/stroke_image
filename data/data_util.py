@@ -1,11 +1,13 @@
 import SimpleITK as sitk
 import pandas as pd
 import glob
-import os
+import os, sys
+sys.path.append(os.path.abspath(os.path.join('/data/linc9/stroke_image/')))
 import numpy as np
 import tables
 import pickle
 from dltk.io.preprocessing import normalise_zero_one
+from results import result_util
 
 current_path = os.path.dirname(__file__)
 
@@ -142,6 +144,7 @@ def write_mr_image_label_to_file(config, training_or_testing, sequence_paths, da
             img = sitk.ReadImage(read_path)
             img_data = sitk.GetArrayFromImage(img)
             img_data = normalise_zero_one(img_data)
+            result_util.save_array_to_nii(img_data, sid+'_f')
             mr_img_list.append(img_data)
         data_storage.append(np.asarray(mr_img_list[:config['n_channels']])[np.newaxis])
         true_label = get_subject_label(sid, ids_labels)
