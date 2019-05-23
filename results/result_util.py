@@ -7,6 +7,7 @@ from data import data_util
 from sklearn.metrics import classification_report, confusion_matrix
 import os
 import nibabel as nib
+from results import result_util
 
 
 def labelize(y_arr):
@@ -52,6 +53,8 @@ def load_testing_data():
 
     id_data = data_util.open_data_file(read_test_file_path).root.id[:]
     X_data = data_util.open_data_file(read_test_file_path).root.data[:]
+    for i in range(3):
+        result_util.save_array_to_nii(X_data[i], str(id_data[i]) + '_fs')
     y_data_o = data_util.open_data_file(read_test_file_path).root.label[:]
     y_data = keras.utils.to_categorical(y_data_o, num_classes=config['n_classes'])
     return X_data, y_data, y_data_o
