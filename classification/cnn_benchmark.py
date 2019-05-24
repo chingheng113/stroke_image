@@ -52,7 +52,7 @@ if __name__ == '__main__':
                                   validation_data=validation_generator,
                                   validation_steps=n_validation_steps,
                                   callbacks=[ReduceLROnPlateau(factor=0.5, patience=20, verbose=1),
-                                             EarlyStopping(verbose=1, patience=50)],
+                                             EarlyStopping(verbose=1, patience=100)],
                                   verbose=1
                                   )
     data_util.save_history(model.name, history)
