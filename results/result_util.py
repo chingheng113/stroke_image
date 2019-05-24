@@ -8,7 +8,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 import os
 import nibabel as nib
 from results import result_util
-
+import SimpleITK as sitk
 
 def labelize(y_arr):
     y_label = []
