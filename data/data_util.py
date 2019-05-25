@@ -151,31 +151,32 @@ def write_mr_image_label_to_file(config, training_or_testing, sequence_paths, da
         label_storage.append(true_label)
         id_storage.append([sid])
         id_list.append(sid)
-    if training_or_testing == 'training':
-        data_storage, label_storage, id_storage = add_augmentation(config, id_list, data_storage, label_storage, id_storage)
+    # if training_or_testing == 'training':
+    #     data_storage, label_storage, id_storage = add_augmentation(config, id_list, data_storage, label_storage, id_storage)
     return data_storage, label_storage, id_storage
 
 
-def add_augmentation(config, id_list, data_storage, label_storage, id_storage):
-    mri_path = os.path.join(current_path, 'mri', 'training')
-    ids_labels = get_ids_labels(config['which_machine'])
-    for id in id_list:
-        for augment in config['augments']:
-            if random_boolean():
-            # if True:
-                mr_img_list = []
-                for s in config['all_sequences']:
-                    sq_path = os.path.join(mri_path, 'n4_' + s)
-                    read_path = os.path.join(sq_path, id + '_' + s.upper() + '_'+augment+'.nii')
-                    img = sitk.ReadImage(read_path)
-                    img_data = sitk.GetArrayFromImage(img)
-                    img_data = normalise_zero_one(img_data)
-                    mr_img_list.append(img_data)
-                data_storage.append(np.asarray(mr_img_list[:config['n_channels']])[np.newaxis])
-                true_label = get_subject_label(id, ids_labels)
-                label_storage.append(true_label)
-                id_storage.append([id])
-    return data_storage, label_storage, id_storage
+# We are using augment data on the fly now...
+# def add_augmentation(config, id_list, data_storage, label_storage, id_storage):
+#     mri_path = os.path.join(current_path, 'mri', 'training')
+#     ids_labels = get_ids_labels(config['which_machine'])
+#     for id in id_list:
+#         for augment in config['augments']:
+#             if random_boolean():
+#             # if True:
+#                 mr_img_list = []
+#                 for s in config['all_sequences']:
+#                     sq_path = os.path.join(mri_path, 'n4_' + s)
+#                     read_path = os.path.join(sq_path, id + '_' + s.upper() + '_'+augment+'.nii')
+#                     img = sitk.ReadImage(read_path)
+#                     img_data = sitk.GetArrayFromImage(img)
+#                     img_data = normalise_zero_one(img_data)
+#                     mr_img_list.append(img_data)
+#                 data_storage.append(np.asarray(mr_img_list[:config['n_channels']])[np.newaxis])
+#                 true_label = get_subject_label(id, ids_labels)
+#                 label_storage.append(true_label)
+#                 id_storage.append([id])
+#     return data_storage, label_storage, id_storage
 
 
 def normalize_data(data, mean, std):
