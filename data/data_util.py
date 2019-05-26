@@ -7,13 +7,8 @@ import numpy as np
 import tables
 import pickle
 from dltk.io.preprocessing import normalise_zero_one
-from results import result_util
-
 current_path = os.path.dirname(__file__)
 
-
-def random_boolean():
-    return np.random.choice([True, False])
 
 
 def get_ids_labels(mc):

@@ -7,7 +7,8 @@ from dltk.io.augmentation import *
 from dltk.io.preprocessing import *
 import scipy
 
-
+a = (1, 2, 3)
+z = a[1]
 heme_o = sitk.ReadImage('101_DWI.nii')
 heme = sitk.GetArrayFromImage(heme_o)
 print(heme.shape)

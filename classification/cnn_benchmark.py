@@ -23,8 +23,8 @@ config['batch_size'] = 8
 config['n_epochs'] = 150
 # config['augments'] = ['F', 'RR10', 'RL10', 'F_RR10', 'F_RL10', 'c', 'c_F', 'c_RL90', 'c_RR90'] #7397
 # config['augments'] = ['F', 'RR10', 'RL10', 'F_RR10', 'F_RL10'] #4383
-config['augments'] = ['F', 'RR10', 'RL10', 'F_RR10', 'F_RL10', 'c', 'c_F', 'c_RL90', 'c_RR90', 'RL90', 'RR90',
-                      'c_F_RR90', 'c_F_RL90']
+# config['augments'] = ['F', 'RR10', 'RL10', 'F_RR10', 'F_RL10', 'c', 'c_F', 'c_RL90', 'c_RR90', 'RL90', 'RR90',
+#                       'c_F_RR90', 'c_F_RL90']
 # config['augments'] = ['F', 'c', 'c_F', 'c_RL90', 'c_RR90', 'RL90', 'RR90', 'c_F_RR90', 'c_F_RL90']
 
 if __name__ == '__main__':
