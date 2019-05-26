@@ -46,47 +46,52 @@ def get_validation_split(data_file, validation_size):
     return training_list, validation_list
 
 
-def augment_image(x_list, y_list, data_file, index, config):
-    data = data_file.root.data[index]
-    label_o = data_file.root.label[index]
-    label = keras.utils.to_categorical(label_o, num_classes=config['n_classes'])
-    # if random_boolean():
-    # if True:
-    #     # rotate left 90
-    #     new_data = np.copy(img.get_data())
-    #     img_RL90 = np.rot90(new_data, axes=(1, 2))
-    #     result_util.save_array_to_nii(img_RL90[1,:,:,:], 'watchL90')
-    #     x_list.append(img_RL90)
-    #     y_list.append(label)
-    # if True:
-    #     # rotate right 90
-    #     new_data = np.copy(img)
-    #     img_RR90 = np.rot90(new_data, axes=(-1, -2))
-    #     result_util.save_array_to_nii(img_RL90[1, :, :, :], 'watchR90')
-    #     x_list.append(img_RR90)
-    #     y_list.append(label)
-    # if True:
-    #     # up side down
-    #     new_data = np.copy(img)
-    #     img_up_down = flip(new_data, axis=1)
-    #     result_util.save_array_to_nii(img_up_down[1, :, :, :], 'watchUp')
-    #     x_list.append(img_up_down)
-    #     y_list.append(label)
-    if True:
+def augment_image(x_list, y_list, X_data, y_data, config):
+    if random_boolean():
+        # rotate left 90
+        sequnce_img = []
+        for i in range(config['n_channels']):
+            img = X_data[i, :, :, :]
+            img_RL90 = np.rot90(img, axes=(1, 2))
+            sequnce_img.append(img_RL90)
+        rl90_result = np.asarray(sequnce_img[:config['n_channels']])
+        x_list.append(rl90_result)
+        y_list.append(y_data)
+    if random_boolean():
+        # rotate right 90
+        sequnce_img = []
+        for i in range(config['n_channels']):
+            img = X_data[i, :, :, :]
+            img_RR90 = np.rot90(img, axes=(-1, -2))
+            sequnce_img.append(img_RR90)
+        rr90_result = np.asarray(sequnce_img[:config['n_channels']])
+        x_list.append(rr90_result)
+        y_list.append(y_data)
+    if random_boolean():
+        # up side down
+        sequnce_img = []
+        for i in range(config['n_channels']):
+            img = X_data[i, :, :, :]
+            img_flipped = np.flip(img, axis=1)
+            sequnce_img.append(img_flipped)
+        up_down_result = np.asarray(sequnce_img[:config['n_channels']])
+        x_list.append(up_down_result)
+        y_list.append(y_data)
+    if random_boolean():
         # flip
         sequnce_img = []
         for i in range(config['n_channels']):
-            img = data[i, :, :, :]
-            img_flipped = flip(img, axis=2)
+            img = X_data[i, :, :, :]
+            img_flipped = np.flip(img, axis=2)
             sequnce_img.append(img_flipped)
         flip_result = np.asarray(sequnce_img[:config['n_channels']])
         x_list.append(flip_result)
-        y_list.append(label)
-    if True:
+        y_list.append(y_data)
+    if random_boolean():
         # crop
         sequnce_img = []
         for i in range(config['n_channels']):
-            img = data[i, :, :, :]
+            img = X_data[i, :, :, :]
             img_dim1 = config['image_shape'][1]
             img_dim2 = config['image_shape'][2]
             crop_dim1 = img_dim1 - 20
@@ -97,7 +102,7 @@ def augment_image(x_list, y_list, data_file, index, config):
             sequnce_img.append(img_resize)
         crop_result = np.asarray(sequnce_img[:config['n_channels']])
         x_list.append(crop_result)
-        y_list.append(label)
+        y_list.append(y_data)
 
 
 def add_data(x_list, y_list, data_file, index, config):
@@ -107,8 +112,7 @@ def add_data(x_list, y_list, data_file, index, config):
     y_data = keras.utils.to_categorical(y_data_o, num_classes=config['n_classes'])
     x_list.append(X_data)
     y_list.append(y_data)
-    augment_image(x_list, y_list, data_file, index, config)
-
+    augment_image(x_list, y_list, X_data, y_data, config)
 
 
 def convert_data(x_list, y_list):
@@ -128,7 +132,9 @@ def data_generator(data_file, index_list, config):
             index = index_list.pop()
             add_data(x_list, y_list, data_file, index, config)
             if len(x_list) == config['batch_size'] or len(x_list) > config['batch_size'] or (len(index_list) == 0 and len(x_list) > 0):
-                # result_util.save_array_to_nii(x_list[1,index,:,:], 'watch_' + str(index))
+                # for z in range(len(x_list)):
+                #     a = x_list[z]
+                #     result_util.save_array_to_nii(a[1, :, :, :], 'watch_'+str(z))
                 yield convert_data(x_list, y_list)
                 x_list = list()
                 y_list = list()

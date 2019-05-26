@@ -61,7 +61,8 @@ def load_testing_data():
 
 
 def save_array_to_nii(X_data, fileName):
-    new_image = nib.Nifti1Image(np.transpose(X_data), affine=np.eye(4))
+    new_data = np.copy(np.transpose(X_data))
+    new_image = nib.Nifti1Image(new_data, affine=np.eye(4))
     nib.save(new_image, fileName+'.nii')
 
 

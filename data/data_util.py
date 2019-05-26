@@ -8,7 +8,7 @@ import tables
 import pickle
 from dltk.io.preprocessing import normalise_zero_one
 current_path = os.path.dirname(__file__)
-
+from results import result_util
 
 
 def get_ids_labels(mc):
