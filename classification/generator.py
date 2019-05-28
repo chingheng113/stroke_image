@@ -109,7 +109,8 @@ def add_data(x_list, y_list, data_file, index, config, is_training):
     X_data = data_file.root.data[index]
     id = data_file.root.id[index]
     y_data_o = data_file.root.label[index]
-    y_data = keras.utils.to_categorical(y_data_o, num_classes=config['n_classes'])
+    y_data = y_data_o
+    # y_data = keras.utils.to_categorical(y_data_o, num_classes=config['n_classes'])
     x_list.append(X_data)
     y_list.append(y_data)
     if is_training:
