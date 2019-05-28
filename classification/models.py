@@ -25,15 +25,18 @@ def get_VoxCNN(config):
     model.add(Convolution3D(64, (3, 3, 3), activation='relu', padding='same'))
     model.add(Convolution3D(64, (3, 3, 3), activation='relu', padding='same'))
     model.add(MaxPooling3D(pool_size=(2, 2, 2)))
+    # 5th Volumetric Convolutional block
+    model.add(Convolution3D(128, (3, 3, 3), activation='relu', padding='same'))
+    model.add(Convolution3D(128, (3, 3, 3), activation='relu', padding='same'))
+    model.add(Convolution3D(128, (3, 3, 3), activation='relu', padding='same'))
+    model.add(MaxPooling3D(pool_size=(2, 2, 2)))
     model.add(Flatten())
-    # 1th Deconvolutional layer with batchnorm and dropout for regularization
+    # 1th fully connected layer with batchnorm and dropout for regularization
     model.add(Dense(128, activation='relu'))
     model.add(BatchNormalization())
     model.add(Dropout(0.7))
-    # 2th Deconvolutional layer
+    # 2th fully connected layer
     model.add(Dense(64, activation='relu'))
-    # model.add(BatchNormalization())
-    # model.add(Dropout(0.7))
     # Output with softmax nonlinearity for classification
     model.add(Dense(config['n_classes'], activation='softmax'))
     opt = keras.optimizers.adam(lr=1e-5)
