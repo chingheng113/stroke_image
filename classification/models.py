@@ -21,10 +21,10 @@ def get_VoxCNN(config):
     model.add(Convolution3D(32, (3, 3, 3), activation='relu', padding='same', kernel_regularizer=l2(0.005)))
     model.add(MaxPooling3D(pool_size=(2, 2, 2)))
     # 4th Volumetric Convolutional block
-    # model.add(Convolution3D(64, (3, 3, 3), activation='relu', padding='same'))
-    # model.add(Convolution3D(64, (3, 3, 3), activation='relu', padding='same'))
-    # model.add(Convolution3D(64, (3, 3, 3), activation='relu', padding='same'))
-    # model.add(MaxPooling3D(pool_size=(2, 2, 2)))
+    model.add(Convolution3D(64, (3, 3, 3), activation='relu', padding='same'))
+    model.add(Convolution3D(64, (3, 3, 3), activation='relu', padding='same'))
+    model.add(Convolution3D(64, (3, 3, 3), activation='relu', padding='same'))
+    model.add(MaxPooling3D(pool_size=(2, 2, 2)))
     model.add(Flatten())
     # 1th Deconvolutional layer with batchnorm and dropout for regularization
     model.add(Dense(128, activation='relu', kernel_regularizer=l2(0.005)))
