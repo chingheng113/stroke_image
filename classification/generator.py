@@ -105,14 +105,16 @@ def augment_image(x_list, y_list, X_data, y_data, config):
         y_list.append(y_data)
 
 
-def add_data(x_list, y_list, data_file, index, config):
+def add_data(x_list, y_list, data_file, index, config, is_training):
     X_data = data_file.root.data[index]
     id = data_file.root.id[index]
     y_data_o = data_file.root.label[index]
     y_data = keras.utils.to_categorical(y_data_o, num_classes=config['n_classes'])
     x_list.append(X_data)
     y_list.append(y_data)
-    augment_image(x_list, y_list, X_data, y_data, config)
+    if is_training:
+        # Note that the validation data should not be augmented!
+        augment_image(x_list, y_list, X_data, y_data, config)
 
 
 def convert_data(x_list, y_list):
@@ -121,7 +123,7 @@ def convert_data(x_list, y_list):
     return x, y
 
 
-def data_generator(data_file, index_list, config):
+def data_generator(data_file, index_list, config, is_training):
     orig_index_list = index_list
     while True:
         x_list = list()
@@ -130,7 +132,7 @@ def data_generator(data_file, index_list, config):
         shuffle(index_list)
         while len(index_list) > 0:
             index = index_list.pop()
-            add_data(x_list, y_list, data_file, index, config)
+            add_data(x_list, y_list, data_file, index, config, is_training)
             if len(x_list) == config['batch_size'] or len(x_list) > config['batch_size'] or (len(index_list) == 0 and len(x_list) > 0):
                 # for z in range(len(x_list)):
                 #     a = x_list[z]
@@ -151,8 +153,8 @@ def get_number_of_steps(n_samples, batch_size):
 
 def get_training_and_validation_generators(data_file, config):
     training_list, validation_list = get_validation_split(data_file, validation_size=0.2)
-    train_generator = data_generator(data_file, training_list, config)
-    validation_generator = data_generator(data_file, validation_list, config)
+    train_generator = data_generator(data_file, training_list, config, True)
+    validation_generator = data_generator(data_file, validation_list, config, False)
     num_training_steps = get_number_of_steps(len(training_list), config['batch_size'])
     num_validation_steps = get_number_of_steps(len(validation_list), config['batch_size'])
     return train_generator, validation_generator, num_training_steps , num_validation_steps
