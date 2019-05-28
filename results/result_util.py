@@ -67,7 +67,7 @@ def save_array_to_nii(X_data, fileName):
 
 
 if __name__ == '__main__':
-    model_name = 'simple_VoxCNN'
+    model_name = 'sequential_1'
     plot_training_acc(model_name)
     plot_training_loss(model_name)
     model = load_model(model_name+'.h5')
