@@ -40,8 +40,7 @@ if __name__ == '__main__':
     # test data
     X_test_data = data_util.open_data_file(read_test_file_path).root.data[:]
     y_test_data_o = data_util.open_data_file(read_test_file_path).root.label[:]
-    y_test_data = y_test_data_o
-    # y_test_data = keras.utils.to_categorical(y_test_data_o, num_classes=config['n_classes'])
+    y_test_data = keras.utils.to_categorical(y_test_data_o, num_classes=config['n_classes'])
 
     # Training
     train_generator, validation_generator, n_train_steps, n_validation_steps = generator.get_training_and_validation_generators(training_data_file, config)
