@@ -20,12 +20,16 @@ testing_gre_path = os.path.join(current_path, 'mri', 'testing', 'n4_gre')
 def clean_folder():
     shutil.rmtree(training_dwi_path)
     os.mkdir(training_dwi_path)
-    shutil.rmtree(training_flair_path)
-    os.mkdir(training_flair_path)
+    # shutil.rmtree(training_flair_path)
+    # os.mkdir(training_flair_path)
+    shutil.rmtree(training_gre_path)
+    os.mkdir(training_gre_path)
     shutil.rmtree(testing_dwi_path)
     os.mkdir(testing_dwi_path)
-    shutil.rmtree(testing_flair_path)
-    os.mkdir(testing_flair_path)
+    # shutil.rmtree(testing_flair_path)
+    # os.mkdir(testing_flair_path)
+    shutil.rmtree(testing_gre_path)
+    os.mkdir(testing_gre_path)
 
 
 if __name__ == '__main__':
