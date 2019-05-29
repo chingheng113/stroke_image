@@ -44,7 +44,7 @@ if __name__ == '__main__':
 
     # Training
     train_generator, validation_generator, n_train_steps, n_validation_steps = generator.get_training_and_validation_generators(training_data_file, config)
-    model = models.get_VoxCNN(config)
+    model = models.get_simple_VoxCNN(config)
     print(model.summary())
     history = model.fit_generator(generator=train_generator,
                                   steps_per_epoch=n_train_steps,
