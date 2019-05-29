@@ -9,7 +9,7 @@ current_path = os.path.dirname(__file__)
 
 def check_image_shape():
     image_shape = (256, 256, 20)
-    sequences = ['dwi', 'flair']
+    sequences = ['dwi', 'gre']
     for s in sequences:
         print('== ' + s)
         mri_path = os.path.join(current_path, 'mri')
@@ -25,10 +25,10 @@ def check_image_shape():
 
 
 def check_patient_number_cross_sequence():
-    sequences = ['dwi', 'flair']
+    sequences = ['dwi', 'gre']
     id_list_sequences = []
     for s in sequences:
-        mri_path = os.path.join('C:\\', 'Users', 'linc9', 'Desktop')
+        mri_path = os.path.join(current_path, 'mri_all')
         sq_path = os.path.join(mri_path, 'n4_' + s)
         read_path = os.path.join(sq_path, '*_' + s.upper() + '.nii')
         img_paths = glob.glob(read_path)
@@ -42,5 +42,6 @@ def check_patient_number_cross_sequence():
 
 
 if __name__ == '__main__':
+    check_image_shape()
     check_patient_number_cross_sequence()
 
