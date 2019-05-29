@@ -112,9 +112,9 @@ def add_data(x_list, y_list, data_file, index, config, is_training):
     y_data = keras.utils.to_categorical(y_data_o, num_classes=config['n_classes'])
     x_list.append(X_data)
     y_list.append(y_data)
-    if is_training:
+    # if is_training:
         # Note that the validation data should not be augmented!
-        augment_image(x_list, y_list, X_data, y_data, config)
+        # augment_image(x_list, y_list, X_data, y_data, config)
 
 
 def convert_data(x_list, y_list):
