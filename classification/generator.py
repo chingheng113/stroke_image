@@ -136,7 +136,8 @@ def data_generator(data_file, index_list, config, is_training):
             if len(x_list) == config['batch_size'] or len(x_list) > config['batch_size'] or (len(index_list) == 0 and len(x_list) > 0):
                 # for z in range(len(x_list)):
                 #     a = x_list[z]
-                #     result_util.save_array_to_nii(a[1, :, :, :], 'watch_'+str(z))
+                #     result_util.save_array_to_nii(a[0, :, :, :], 'watch_dwi_'+str(z))
+                #     result_util.save_array_to_nii(a[1, :, :, :], 'watch_gre_' + str(z))
                 yield convert_data(x_list, y_list)
                 x_list = list()
                 y_list = list()
