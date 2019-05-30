@@ -74,7 +74,7 @@ if __name__ == '__main__':
     X_data, y_data, y_data_o = load_testing_data()
     print(y_data_o[y_data_o == 0].shape)
     print(y_data_o[y_data_o == 1].shape)
-    loss, acc = model.evaluate(X_data, y_data, verbose=0)
+    loss, acc = model.evaluate(X_data, y_data_o, verbose=0)
     predict_prob = model.predict(X_data)
     predict_labels = labelize(predict_prob)
     cm = confusion_matrix(y_data_o, predict_labels)
