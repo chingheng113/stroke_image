@@ -16,7 +16,7 @@ config['n_classes'] = 2
 if config['which_machine'] == 'ct':
     config['all_sequences'] = ['ct']
 else:
-    config["all_sequences"] = ['gre']
+    config["all_sequences"] = ['dwi', 'gre']
 config['n_channels'] = len(config["all_sequences"])
 config['input_shape'] = tuple([config['n_channels']] + list(config['image_shape']))
 config['batch_size'] = 8

@@ -33,18 +33,18 @@ def clean_folder():
 
 
 # ischmic (1) vs. non-ischemic (0)
-# ischmic_non_dic = {'Hemorrhage(Primary Hematoma)': 0,
-#                    'Hemorrhage(SDH)': 0,
-#                    'Hemorrhage(SDH), Other Diagnosis': 0,
-#                    'Ischemic Stroke': 1,
-#                    'TIA': 0,
-#                    'Other Diagnosis': 0
-#                    }
 ischmic_non_dic = {'Hemorrhage(Primary Hematoma)': 0,
                    'Hemorrhage(SDH)': 0,
                    'Hemorrhage(SDH), Other Diagnosis': 0,
-                   'TIA': 1
+                   'Ischemic Stroke': 1,
+                   'TIA': 0,
+                   'Other Diagnosis': 0
                    }
+# ischmic_non_dic = {'Hemorrhage(Primary Hematoma)': 0,
+#                    'Hemorrhage(SDH)': 0,
+#                    'Hemorrhage(SDH), Other Diagnosis': 0,
+#                    'TIA': 1
+#                    }
 
 if __name__ == '__main__':
     df = pd.read_csv(os.path.join(current_path, 'HEME-ER details for Dr Fann.csv')).dropna()
@@ -57,9 +57,9 @@ if __name__ == '__main__':
     print(df[df['Diagnosis Classification'] == 'TIA'].shape)
     print(df[df['Diagnosis Classification'] == 'Other Diagnosis'].shape)
     # only get Ischemic an TIA
-    df_less = df[df['Diagnosis Classification'].isin(['Hemorrhage(Primary Hematoma)', 'Hemorrhage(SDH)', 'Hemorrhage(SDH), Other Diagnosis'])]
-    # df_less = df[df['Diagnosis Classification'] == 'TIA']
-    df_more = df[df['Diagnosis Classification'] == 'TIA']
+    # df_less = df[df['Diagnosis Classification'].isin(['Hemorrhage(Primary Hematoma)', 'Hemorrhage(SDH)', 'Hemorrhage(SDH), Other Diagnosis'])]
+    df_less = df[df['Diagnosis Classification'] == 'TIA']
+    df_more = df[df['Diagnosis Classification'] == 'Ischemic Stroke']
     df_more_down_sample = df_more.sample(n=df_less.shape[0],  random_state=123)
     df = pd.concat([df_less, df_more_down_sample], axis=0)
 

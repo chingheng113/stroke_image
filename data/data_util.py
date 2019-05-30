@@ -23,18 +23,18 @@ def get_ids_labels(mc):
     # label
     labels = df[['Diagnosis Classification']]
     # ischmic (1) vs. non-ischemic (0)
-    # replace_dic = {'Hemorrhage(Primary Hematoma)': 0,
-    #                'Hemorrhage(SDH)': 0,
-    #                'Hemorrhage(SDH), Other Diagnosis': 0,
-    #                'Ischemic Stroke': 1,
-    #                'TIA': 0,
-    #                'Other Diagnosis': 0
-    #                }
     replace_dic = {'Hemorrhage(Primary Hematoma)': 0,
                    'Hemorrhage(SDH)': 0,
                    'Hemorrhage(SDH), Other Diagnosis': 0,
-                   'TIA': 1
+                   'Ischemic Stroke': 1,
+                   'TIA': 0,
+                   'Other Diagnosis': 0
                    }
+    # replace_dic = {'Hemorrhage(Primary Hematoma)': 0,
+    #                'Hemorrhage(SDH)': 0,
+    #                'Hemorrhage(SDH), Other Diagnosis': 0,
+    #                'TIA': 1
+    #                }
     labels.replace(replace_dic, inplace=True)
     id_label = pd.concat([ids, labels], axis=1)
     return id_label
