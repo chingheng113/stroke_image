@@ -46,8 +46,9 @@ def get_validation_split(data_file, validation_size):
     return training_list, validation_list
 
 
-def augment_image(x_list, y_list, X_data, y_data, config):
-    if random_boolean():
+def augment_image(X_data, config):
+    ag = np.random.choice(['RL90', 'RR90', 'ud', 'flip', 'crop'])
+    if ag == 'RL90':
         # rotate left 90
         sequnce_img = []
         for i in range(config['n_channels']):
@@ -55,9 +56,8 @@ def augment_image(x_list, y_list, X_data, y_data, config):
             img_RL90 = np.rot90(img, axes=(1, 2))
             sequnce_img.append(img_RL90)
         rl90_result = np.asarray(sequnce_img[:config['n_channels']])
-        x_list.append(rl90_result)
-        y_list.append(y_data)
-    if random_boolean():
+        return rl90_result
+    if ag == 'RR90':
         # rotate right 90
         sequnce_img = []
         for i in range(config['n_channels']):
@@ -65,9 +65,8 @@ def augment_image(x_list, y_list, X_data, y_data, config):
             img_RR90 = np.rot90(img, axes=(-1, -2))
             sequnce_img.append(img_RR90)
         rr90_result = np.asarray(sequnce_img[:config['n_channels']])
-        x_list.append(rr90_result)
-        y_list.append(y_data)
-    if random_boolean():
+        return rr90_result
+    if ag == 'ud':
         # up side down
         sequnce_img = []
         for i in range(config['n_channels']):
@@ -75,9 +74,8 @@ def augment_image(x_list, y_list, X_data, y_data, config):
             img_flipped = np.flip(img, axis=1)
             sequnce_img.append(img_flipped)
         up_down_result = np.asarray(sequnce_img[:config['n_channels']])
-        x_list.append(up_down_result)
-        y_list.append(y_data)
-    if random_boolean():
+        return up_down_result
+    if ag == 'flip':
         # flip
         sequnce_img = []
         for i in range(config['n_channels']):
@@ -85,9 +83,8 @@ def augment_image(x_list, y_list, X_data, y_data, config):
             img_flipped = np.flip(img, axis=2)
             sequnce_img.append(img_flipped)
         flip_result = np.asarray(sequnce_img[:config['n_channels']])
-        x_list.append(flip_result)
-        y_list.append(y_data)
-    if random_boolean():
+        return flip_result
+    if ag == 'crop':
         # crop
         sequnce_img = []
         for i in range(config['n_channels']):
@@ -101,21 +98,20 @@ def augment_image(x_list, y_list, X_data, y_data, config):
             img_resize = scipy.ndimage.zoom(img_crop, (1, img_dim1/crop_dim1, img_dim2/crop_dim2), order=3)
             sequnce_img.append(img_resize)
         crop_result = np.asarray(sequnce_img[:config['n_channels']])
-        x_list.append(crop_result)
-        y_list.append(y_data)
+        return crop_result
 
 
 def add_data(x_list, y_list, data_file, index, config, is_training):
-    X_data = data_file.root.data[index]
     id = data_file.root.id[index]
+    X_data = data_file.root.data[index]
+    if is_training:
+        # Note that the validation data should not be augmented!
+        X_data = augment_image(X_data, config)
     y_data_o = data_file.root.label[index]
     y_data = y_data_o
     # y_data = keras.utils.to_categorical(y_data_o, num_classes=config['n_classes'])
     x_list.append(X_data)
     y_list.append(y_data)
-    # if is_training:
-    #     # Note that the validation data should not be augmented!
-    #     augment_image(x_list, y_list, X_data, y_data, config)
 
 
 def convert_data(x_list, y_list):
@@ -134,7 +130,7 @@ def data_generator(data_file, index_list, config, is_training):
         while len(index_list) > 0:
             index = index_list.pop()
             add_data(x_list, y_list, data_file, index, config, is_training)
-            if len(x_list) == config['batch_size'] or len(x_list) > config['batch_size'] or (len(index_list) == 0 and len(x_list) > 0):
+            if len(x_list) == config['batch_size'] or (len(index_list) == 0 and len(x_list) > 0):
                 # for z in range(len(x_list)):
                 #     a = x_list[z]
                 #     result_util.save_array_to_nii(a[0, :, :, :], 'watch_dwi_'+str(z))
