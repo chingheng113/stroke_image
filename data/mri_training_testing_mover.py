@@ -32,27 +32,36 @@ def clean_folder():
     os.mkdir(testing_gre_path)
 
 
-if __name__ == '__main__':
-    # ischmic (1) vs. non-ischemic (0)
-    replace_dic = {'Hemorrhage(Primary Hematoma)': 0,
+# ischmic (1) vs. non-ischemic (0)
+ischmic_non_dic = {'Hemorrhage(Primary Hematoma)': 0,
                    'Hemorrhage(SDH)': 0,
                    'Hemorrhage(SDH), Other Diagnosis': 0,
                    'Ischemic Stroke': 1,
                    'TIA': 0,
                    'Other Diagnosis': 0
                    }
+
+if __name__ == '__main__':
     df = pd.read_csv(os.path.join(current_path, 'HEME-ER details for Dr Fann.csv')).dropna()
-    #
+    # Remove skip ids ==
     # skip_id_list = skip_ids.dwi_less_slice + skip_ids.flair_noise + skip_ids.no_flair +skip_ids.dwi_noise
     skip_id_list = skip_ids.dwi_less_slice + skip_ids.dwi_noise + skip_ids.no_gre + skip_ids.gre_noise
-    skip_id_list = list(dict.fromkeys(skip_id_list))
-    df = df[~df['MRI HEME #'].isin(skip_id_list)]
-    #
-    # df = df[df['Diagnosis Classification'].isin(['Ischemic Stroke', 'Other Diagnosis'])]
-    #
+    skip_id_list_uniq = list(dict.fromkeys(skip_id_list))
+    df = df[~df['MRI HEME #'].isin(skip_id_list_uniq)]
+    print(df[df['Diagnosis Classification'] == 'Ischemic Stroke'].shape)
+    print(df[df['Diagnosis Classification'] == 'TIA'].shape)
+    print(df[df['Diagnosis Classification'] == 'Other Diagnosis'].shape)
+    # only get Ischemic an TIA
+    # df = df[df['Diagnosis Classification'].isin(['Ischemic Stroke', 'TIA'])]
+    df_tia = df[df['Diagnosis Classification'] == 'TIA']
+    df_is = df[df['Diagnosis Classification'] == 'Ischemic Stroke']
+    df_is_down_sample = df_is.sample(n=df_tia.shape[0],  random_state=123)
+    df = pd.concat([df_tia, df_is_down_sample], axis=0)
+
     ids = df[['MRI HEME #']].astype(int)
     labels = df[['Diagnosis Classification']]
-    labels.replace(replace_dic, inplace=True)
+    labels.replace(ischmic_non_dic, inplace=True)
+
     id_train, id_test, label_train, label_test = train_test_split(ids, labels, test_size=0.33)
     # deleting files
     clean_folder()
