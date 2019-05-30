@@ -28,13 +28,13 @@ def get_VoxCNN(config):
     model.add(Flatten())
     # 1th fully connected layer with batchnorm and dropout for regularization
     model.add(Dense(128, activation='relu'))
-    # model.add(BatchNormalization())
-    model.add(Dropout(0.5))
+    model.add(BatchNormalization())
+    model.add(Dropout(0.7))
     # 2th fully connected layer
     model.add(Dense(64, activation='relu'))
     # Output with softmax nonlinearity for classification
     model.add(Dense(config['n_classes'], activation='softmax'))
-    opt = keras.optimizers.adam(lr=1e-5)
+    opt = keras.optimizers.adam(lr=27e-6)
     model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
 
     return model
