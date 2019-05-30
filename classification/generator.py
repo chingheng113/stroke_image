@@ -104,7 +104,7 @@ def augment_image(X_data, config):
 def add_data(x_list, y_list, data_file, index, config, is_training):
     id = data_file.root.id[index]
     X_data = data_file.root.data[index]
-    if is_training:
+    if is_training & random_boolean():
         # Note that the validation data should not be augmented!
         X_data = augment_image(X_data, config)
     y_data_o = data_file.root.label[index]
