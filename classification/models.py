@@ -34,7 +34,7 @@ def get_VoxCNN(config):
     model.add(Dense(64, activation='relu'))
     # Output with softmax nonlinearity for classification
     model.add(Dense(1, activation='sigmoid'))
-    opt = keras.optimizers.adam()
+    opt = keras.optimizers.rmsprop()
     model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
 
     return model
