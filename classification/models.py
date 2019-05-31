@@ -29,9 +29,11 @@ def get_VoxCNN(config):
     # 1th fully connected layer with batchnorm and dropout for regularization
     model.add(Dense(128, activation='relu'))
     model.add(BatchNormalization())
-    model.add(Dropout(0.7))
+    model.add(Dropout(0.5))
     # 2th fully connected layer
     model.add(Dense(64, activation='relu'))
+    model.add(BatchNormalization())
+    model.add(Dropout(0.5))
     # Output with softmax nonlinearity for classification
     model.add(Dense(1, activation='sigmoid'))
     opt = keras.optimizers.adam(lr=27e-6)

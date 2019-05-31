@@ -58,10 +58,10 @@ if __name__ == '__main__':
     print(df[df['Diagnosis Classification'] == 'Other Diagnosis'].shape)
     # only get Ischemic an TIA
     # df_less = df[df['Diagnosis Classification'].isin(['Hemorrhage(Primary Hematoma)', 'Hemorrhage(SDH)', 'Hemorrhage(SDH), Other Diagnosis'])]
-    df_less = df[df['Diagnosis Classification'] == 'TIA']
-    df_more = df[df['Diagnosis Classification'] == 'Ischemic Stroke']
-    df_more_down_sample = df_more.sample(n=df_less.shape[0],  random_state=123)
-    df = pd.concat([df_less, df_more_down_sample], axis=0)
+    # df_less = df[df['Diagnosis Classification'] == 'TIA']
+    # df_more = df[df['Diagnosis Classification'] == 'Ischemic Stroke']
+    # df_more_down_sample = df_more.sample(n=df_less.shape[0],  random_state=123)
+    # df = pd.concat([df_less, df_more_down_sample], axis=0)
 
     ids = df[['MRI HEME #']].astype(int)
     labels = df[['Diagnosis Classification']]
