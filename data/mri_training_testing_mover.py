@@ -63,6 +63,9 @@ if __name__ == '__main__':
     # df_more_down_sample = df_more.sample(n=df_less.shape[0],  random_state=123)
     # df = pd.concat([df_less, df_more_down_sample], axis=0)
 
+    # only one class
+    df = df[df['Diagnosis Classification'] == 'Ischemic Stroke']
+
     ids = df[['MRI HEME #']].astype(int)
     labels = df[['Diagnosis Classification']]
     labels.replace(ischmic_non_dic, inplace=True)
