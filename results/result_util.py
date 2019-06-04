@@ -84,10 +84,13 @@ if __name__ == '__main__':
         x = X_data[i, :, :, :]
         x = x[np.newaxis, :]
         y = y_data_o[i]
-        predict_prob = model.predict(x)
-        predict_probs.append(predict_prob)
-        predict_labels.append(labelize(predict_prob))
-        print(y, labelize(predict_prob))
+        # predict_prob = model.predict(x)
+        # predict_probs.append(predict_prob)
+        # predict_labels.append(labelize(predict_prob))
+        # print(y, labelize(predict_prob))
+        predict_label = model.predict_classes(x)
+        predict_labels.append(predict_labels)
+        print(y, predict_label)
     cm = confusion_matrix(y_data_o, predict_labels)
     print(cm)
     # print(acc)
