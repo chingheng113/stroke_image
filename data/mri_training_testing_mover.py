@@ -73,14 +73,14 @@ if __name__ == '__main__':
     # training data
     for index, row in id_train.iterrows():
         train_id = str(row['MRI HEME #'])
-        shutil.copy(os.path.join(source_path, 'n4_dwi', train_id+'_DWI.nii'), training_dwi_path)
+        shutil.copy(os.path.join(source_path, 'n4_dwi_mni', train_id+'_DWI.nii'), training_dwi_path)
         # shutil.copy(os.path.join(source_path, 'n4_flair', train_id + '_FLAIR.nii'), training_flair_path)
-        shutil.copy(os.path.join(source_path, 'n4_gre', train_id + '_GRE.nii'), training_gre_path)
+        # shutil.copy(os.path.join(source_path, 'n4_gre', train_id + '_GRE.nii'), training_gre_path)
     # testinf data
     for index, row in id_test.iterrows():
         test_id = str(row['MRI HEME #'])
-        shutil.copy(os.path.join(source_path, 'n4_dwi', test_id + '_DWI.nii'), testing_dwi_path)
+        shutil.copy(os.path.join(source_path, 'n4_dwi_min', test_id + '_DWI.nii'), testing_dwi_path)
         # shutil.copy(os.path.join(source_path, 'n4_flair', test_id + '_FLAIR.nii'), testing_flair_path)
-        shutil.copy(os.path.join(source_path, 'n4_gre', test_id + '_GRE.nii'), testing_gre_path)
+        # shutil.copy(os.path.join(source_path, 'n4_gre', test_id + '_GRE.nii'), testing_gre_path)
     print('Moving files done')
 

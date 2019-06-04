@@ -11,12 +11,12 @@ backend.set_image_dim_ordering('th')
 
 config = dict()
 config['which_machine'] = 'mri' # Need to rewrite 'write_ct_image_label_to_file' for training and testing
-config['image_shape'] = (20, 256, 256) # CHANNEL, DEPTH, WIDTH, HEIGHT
+config['image_shape'] = (96, 256, 256) # CHANNEL, DEPTH, WIDTH, HEIGHT
 config['n_classes'] = 2
 if config['which_machine'] == 'ct':
     config['all_sequences'] = ['ct']
 else:
-    config["all_sequences"] = ['dwi', 'gre']
+    config["all_sequences"] = ['dwi']
 config['n_channels'] = len(config["all_sequences"])
 config['input_shape'] = tuple([config['n_channels']] + list(config['image_shape']))
 config['batch_size'] = 6
