@@ -74,9 +74,20 @@ if __name__ == '__main__':
     X_data, y_data, y_data_o = load_testing_data()
     print(y_data_o[y_data_o == 0].shape)
     print(y_data_o[y_data_o == 1].shape)
-    loss, acc = model.evaluate(X_data, y_data_o, verbose=0)
-    predict_prob = model.predict(X_data)
-    predict_labels = labelize(predict_prob)
+    # loss, acc = model.evaluate(X_data, y_data_o, verbose=0)
+    # predict_prob = model.predict(X_data)
+    # predict_labels = labelize(predict_prob)
+
+    predict_probs = []
+    predict_labels = []
+    for i in range(y_data.shape[0]):
+        x = X_data[i, :, :, :]
+        x = x[np.newaxis, :]
+        y = y_data_o[i]
+        predict_prob = model.predict(x)
+        predict_probs.append(predict_prob)
+        predict_labels.append(labelize(predict_prob))
+        print(y, labelize(predict_prob))
     cm = confusion_matrix(y_data_o, predict_labels)
     print(cm)
-    print(acc)
+    # print(acc)
