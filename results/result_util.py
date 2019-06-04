@@ -89,7 +89,7 @@ if __name__ == '__main__':
         # predict_labels.append(labelize(predict_prob))
         # print(y, labelize(predict_prob))
         predict_label = model.predict_classes(x)
-        predict_labels.append(predict_labels)
+        predict_labels.append(predict_label.item(0))
         print(y, predict_label)
     cm = confusion_matrix(y_data_o, predict_labels)
     print(cm)
