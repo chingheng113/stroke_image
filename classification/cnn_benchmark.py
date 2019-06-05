@@ -19,7 +19,7 @@ else:
     config["all_sequences"] = ['dwi']
 config['n_channels'] = len(config["all_sequences"])
 config['input_shape'] = tuple([config['n_channels']] + list(config['image_shape']))
-config['batch_size'] = 6
+config['batch_size'] = 5
 config['n_epochs'] = 200
 
 if __name__ == '__main__':
