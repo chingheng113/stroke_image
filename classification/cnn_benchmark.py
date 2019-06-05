@@ -3,7 +3,7 @@ sys.path.append(os.path.abspath(os.path.join('/data/linc9/stroke_image/')))
 from data import data_util
 from classification import generator, models
 from keras import backend
-from keras.callbacks import ReduceLROnPlateau, EarlyStopping
+from keras.callbacks import ReduceLROnPlateau, EarlyStopping, ModelCheckpoint
 import keras.optimizers
 
 backend.set_image_data_format('channels_first')
@@ -48,11 +48,13 @@ if __name__ == '__main__':
                                   validation_data=validation_generator,
                                   validation_steps=n_validation_steps,
                                   callbacks=[ReduceLROnPlateau(factor=0.5, patience=20, verbose=1),
-                                             EarlyStopping(verbose=1, patience=100)],
+                                             EarlyStopping(verbose=1, patience=100),
+                                             ModelCheckpoint(os.path.join('..', 'results', model.name + '.h5'),
+                                                             save_best_only=True, verbose=1)],
                                   verbose=1
                                   )
     data_util.save_history(model.name, history)
-    data_util.save_model(model.name, model)
+    # data_util.save_model(model.name, model)
     print('Training done..')
     # Testing
     loss, acc = model.evaluate(X_test_data, y_test_data, verbose=0)

@@ -71,7 +71,7 @@ if __name__ == '__main__':
     labels = df[['Diagnosis Classification']]
     labels.replace(ischmic_non_dic, inplace=True)
 
-    id_train, id_test, label_train, label_test = train_test_split(ids, labels, test_size=0.33)
+    id_train, id_test, label_train, label_test = train_test_split(ids, labels, test_size=0.2)
     # deleting files
     clean_folder()
     # training data
